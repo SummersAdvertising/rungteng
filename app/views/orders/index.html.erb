@@ -79,12 +79,12 @@
             <% end %>
 
             <div class="name"><span><%= product.ordernum %></span><%= product.name %></div>
-            <div class="info"><%= simple_format(product.description) %> <br />
-              <%= product.weight %> <br />
+            <div class="info"><%= simple_format(product.description) %> 
+              總重 <%= product.weight %> <br />
               售價 <%= product.price %> 元 </div>
             <div class="amt"> 我要
                 <input name="amount" autocomplete="off" type="text" data-item="<%= product.id%>" size="3" />
-                包 </div>
+                盒 </div>
           </td>
 
           <% if (@count%3 == 0) %>
