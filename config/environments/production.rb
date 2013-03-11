@@ -1,3 +1,13 @@
+def compile_asset?(path)
+  if File.basename(path) =~ /^[^_].*\.\w+$/
+    puts "Compiling: #{path}"
+    true
+  else
+    puts "Ignoring: #{path}"
+    false
+  end
+end
+
 Rungteng::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
