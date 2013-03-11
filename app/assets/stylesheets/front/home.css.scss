@@ -1,12 +1,8 @@
-#header{min-height:1024px;}
-#container{background:image-url('abg.jpg') 0 0 no-repeat;min-height:1024px;}
+#header{min-height:1025px;}
+#container{background:image-url('abg.jpg') 0 0 no-repeat;min-height:1025px;}
 
 
 #accordion-slider {overflow:hidden;height: 100%}
-/*
-#accordion-slider:hover li{opacity:.5}
-#accordion-slider:hover li:hover{opacity:1}
-*/
 #accordion-slider li{ display: block; float: left; width: 248px; height: 100%; cursor:pointer;position:relative;background-position:center center ;background-repeat:no-repeat}
 #f1{background:image-url('f1-1.jpg')}
 #f2{background:image-url('f2-1.jpg')}
