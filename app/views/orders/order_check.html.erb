@@ -1,0 +1,173 @@
+<%= stylesheet_link_tag "order_check", :media => "all" %>
+<%= form_for(@order) do |f| %>
+<div id="container" _height="auto">
+  <div id="top">
+    <h2>產品介紹</h2>
+  </div>
+  <!--top-->
+
+  <div id="content"  _height="auto">
+    <div id="counter">
+      <h3>您訂購的是：</h3>
+      <table id="productList" width="100%" border="0" cellspacing="0" cellpadding="0">
+        <!-- show the selected products -->
+      </table>
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr id="total">
+          <td colspan="6" align="right" valign="middle"><h3>金額總計：</h3></td>
+          <td colspan="2" align="center" valign="middle"><a>13250 元</a></td>
+          <input id="orderitems" size="300" type="text" name="orderitems" style="display: none;" />
+          <%= f.text_field :totalprice, :autocomplete => "off", :style => "display: none;"  %>
+        </tr>
+      </table>
+
+      <p> ˙以上價格包含稅費及運費<br />
+          ˙運送說明：我們將交付冷凍物流公司，全程-18℃保存，將鮮甜味美的肉品為您宅配到府。 </p>
+    </div>
+    <!--counter-->
+
+    <div class="article">
+      <h3>訂購人資料</h3>
+      <table width="50%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="24%"><strong>*</strong>姓名： </td>
+            <td colspan="2"><%= f.text_field :order_name, :autocomplete => "off", :class => "validate",:data => {:validate => "訂購人姓名"}  %></td>
+          </tr>
+          <tr>
+            <td colspan="2"><strong>*</strong>連絡電話/手機： </td>
+            <td width="59%"><%= f.text_field :order_phone, :autocomplete => "off", :class => "validate",:data => {:validate => "訂購人電話"}  %></td>
+          </tr>
+          <tr>
+            <td>傳真： </td>
+            <td colspan="2"><%= f.text_field :order_fax, :autocomplete => "off"%></td>
+          </tr>
+          <tr>
+            <td>統一編號： </td>
+            <td colspan="2"><%= f.text_field :order_companytaxID, :autocomplete => "off"%></td>
+          </tr>
+          <tr>
+            <td><strong>*</strong>E-mail： </td>
+            <td colspan="2"><%= f.text_field :order_email, :autocomplete => "off", :class => "validate",:data => {:validate => "訂購人E-mail"}  %></td>
+          </tr>
+        </table>
+      </div>
+      <div class="article">
+        <h3>宅配取貨資料</h3>
+        <table width="50%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td width="42%"><strong>*</strong>收貨人姓名：</td>
+            <td width="58%"><%= f.text_field :receive_name, :autocomplete => "off", :class => "validate",:data => {:validate => "收貨人姓名"}  %></td>
+          </tr>
+          <tr>
+            <td><strong>*</strong>收貨人電話/手機：</td>
+            <td><%= f.text_field :receive_phone, :autocomplete => "off", :class => "validate",:data => {:validate => "收貨人電話"}  %></td>
+          </tr>
+          <tr>
+            <td><strong>*</strong>指定收貨地址：</td>
+            <td><%= f.text_field :receive_address, :autocomplete => "off", :class => "validate",:data => {:validate => "收貨人地址"}  %></td>
+          </tr>
+          <tr>
+            <td><strong>*</strong>預定收貨日期：</td>
+            <td><%= f.text_field :receive_date, :autocomplete => "off", :class => "validate",:data => {:validate => "預定收貨日期"}  %></td>
+          </tr>
+          <tr>
+            <td>&nbsp;</td>
+            <td>
+              <input type="radio" name="preferred_time" value="morning" class="checkbox" /> 上午 <input type="radio" name="preferred_time" value="afternoon" class="checkbox" /> 下午
+              <%= f.text_field :receive_time, :autocomplete => "off", :class => "validate", :style =>"display: none;",:data => {:validate => "預定收貨時間"} %></td>
+          </tr>
+        </table>
+      </div>
+      <div id="error"></div>
+      <div class="article" id="next">
+      <h3>付款方式</h3>
+      轉帳銀行：玉山銀行-城中分行<br />
+      轉入帳號：0532-940-009885<br />
+      戶名：榮騰農產股份有限公司<br />
+      <a id="submit" href="#">確認</a>
+      </div>
+    </div>
+    <!--content--> 
+  </div>
+  <!--container-->
+<% end %>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#banner ul li").eq(5).addClass("select");
+
+  /* add datepicker */
+  $( "#order_receive_date" ).datepicker();
+  $( "#order_receive_date" ).change(function(){
+    $(this).datepicker("option", "dateFormat", "yy-mm-dd");
+  });
+
+  $("#submit").click(function(event){
+    if(formValidate()){
+      console.log("true");
+      $("form").submit();
+    }
+    
+    event.preventDefault();
+  });
+
+  $("input[type=radio]").change(function(){
+    $("#order_receive_time").val($("input[type=radio]:checked").val());
+
+  });
+
+  /* validate the form before send */
+  function formValidate(){
+    var submit = true;
+    var msg = "";
+
+    $(".validate").each(function(){
+      if(!$(this).val()){
+        submit = false;
+        msg += $(this).data("validate")+"不能為空<br />";
+      }
+    });
+
+    $("#error").html(msg);
+
+    return submit;
+  }
+
+  /* show the orderitems and calculate the total price */
+  var orderitems = '<%= @orderitems.to_json.html_safe %>';
+  $("#orderitems").val(orderitems);
+
+  showOrderitems(orderitems);
+
+  function showOrderitems(orderitems){
+    orderitems = JSON.parse(orderitems);
+    for(var item in orderitems){
+      getItemData(orderitems[item]);
+    }
+  }
+
+  function getItemData(orderitem){
+    $.ajax({
+        type: "GET",
+        dataType: "json",
+        url: "/products/" + orderitem.id,
+        success: function(data){
+          var price = orderitem.amount * data.price;
+          calculateTotalprice(price);
+
+          $("#productList").append('<tr><td width="25%" class="name"><span>'+data.ordernum+'</span>'+data.name+'</td><td width="2%">│</td><td width="9%" align="center">'+data.weight+'</td><td width="10%" align="center">'+orderitem.amount+'包</td><td width="2%">│</td><td width="33%" align="right">NT :</td><td width="15%" align="right">'+price+' </td><td width="4%" align="center">元</td></tr>');
+        }
+    }); 
+  }
+
+  var totalprice = 0;
+  function calculateTotalprice(price){
+    totalprice += price;
+    $("#order_totalprice").val(totalprice);
+    $("#total a").html(totalprice + " 元");
+  }
+
+});
+</script>

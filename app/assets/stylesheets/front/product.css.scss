@@ -1,0 +1,16 @@
+#header{height:3400px;*height:3416px}
+#container{height:3400px;*height:3416px}
+
+h2{background:image-url('pd-h2.jpg') 0 0 no-repeat #221E1F;height:85px;text-indent:-9999px;border-top:40px solid #EA5504}
+
+#nav{overflow:hidden;border-bottom:1px solid #83807F;padding:10px 0 0 0;width:825px;margin:0 auto;background:image-url('cbg.jpg') repeat}
+#nav li{float:left;padding:3px 10px;border-left:1px solid #83807F}
+#nav li:nth-child(1){border:0}
+#nav li a{font:300 13px "新細明體";text-shadow:0 1px 0 #fff;color:#9FA0A0}
+#nav li a:hover{color:#000}
+#nav .select a{color:#7D0000}
+
+#top{height:200px}
+#content{width:720px;margin:0 auto}
+.article{border-top:1px solid #F3A67B;border-bottom:1px solid #F9D1B9}
+.article p{padding:10px;font:300 13px "微軟正黑體";line-height:1.7em}

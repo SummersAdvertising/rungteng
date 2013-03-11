@@ -1,0 +1,59 @@
+<!--side-->
+<div id="main" class="right">
+  <div class="main-title">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="top" class="title" height="22" width="70">產品名稱</td>
+        <td valign="middle" class="text"><%= @product.name %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="main-text">
+    <table width="100%" border="0" cellspacing="5" cellpadding="0">
+      <tr>
+        <th width="9%">編號</th>
+        <td width="9%" align="left"><%= @product.ordernum %></td>
+        <th width="9%">重量</th>
+        <td width="9%" align="left"><%= @product.weight %></td>
+        <th width="9%">售價</th>
+        <td width="9%" align="left"><%= @product.price %></td>
+        <td colspan="2" rowspan="2" width="46%">&nbsp;</td>
+      </tr>
+      <% if(!@product.description.blank?) %>
+      <tr>
+        <th width="9%" valign="top">內容</th>
+        <td colspan="7" align="left" width="91%">
+          <%= @product.description %>
+        </td>
+      </tr>
+      <% end %>
+      <tr>
+        <th width="9%" valign="top">圖片</th>
+        <td colspan="7" width="91%">
+          <% if(@product.image.path) %>
+          <%= image_tag(@product.image_url(:thumb)) %>
+          <%else%>
+          <p>尚未上傳商品封面圖片</p>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <% if(@product.producttype == 'item' ) %>
+  <div class="button"><%= link_to image_tag("/images/edit.png")+'編輯', edit_admin_product_path(@product) %></div>
+  <div class="button"><%= link_to image_tag("/images/back.png")+'返回', admin_products_path %></div>
+  <% else %>
+  <div class="button"><a href="/admin/boxs/<%= @product.id %>/edit" data-method="put"><img src="/images/edit.png" />編輯</a></div>
+  <div class="button"><%= link_to image_tag("/images/back.png")+'返回', admin_boxs_path %></div>
+  <% end %>
+  
+</div>
+<!--main--> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#product").addClass("active");
+});
+</script>

@@ -1,0 +1,107 @@
+ <div id="main" class="right">
+    <div class="main-title">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td valign="top" class="title" height="22" width="103"><%= @order.created_at.to_date %></td>
+          <td width="543" valign="middle" class="text"><%= @order.order_name %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="main-text">
+      <table width="100%" border="0" cellspacing="5" cellpadding="0">        
+          <tr>
+            <th width="8%" align="left">電話：</th>
+            <td width="32%" align="left"><%= @order.order_phone %></td>
+            <th width="17%" align="left">收貨人姓名：</th>
+            <td width="43%" align="left"><%= @order.receive_name %></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left">傳真：</th>
+            <td width="32%" align="left">(02)3456-7890</td>
+            <th width="17%" align="left">收貨人電話：</th>
+            <td width="43%" align="left"><%= @order.receive_phone %></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left">統編：</th>
+            <td width="32%" align="left"><%= @order.order_companytaxID %></td>
+            <th width="17%" align="left">指定收貨時間：</th>
+            <td width="43%" align="left"><%= @order.receive_date %>&nbsp;
+              <% if (@order.receive_time=="morning") %>
+              早上
+              <% elsif (@order.receive_time=="afternoon") %>
+              下午
+              <% end %></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left">郵件：</th>
+            <td width="32%" align="left"><%= @order.order_email %></td>
+            <th width="17%" align="left">指定收貨地址：</th>
+            <td width="43%" align="left"><%= @order.receive_address%></td>
+          </tr>        
+      </table>
+    </div>
+    <div class="main-list"  style="margin:10px 0 0 0">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr class="main-list-title">
+          <th width="8%" align="center" scope="col">編號</th>
+          <th width="63%" align="left" scope="col">產品名稱</th>
+          <th width="9%" align="center" scope="col">重量</th>
+          <th width="9%" align="center" scope="col">數量</th>
+          <th width="9%" align="center" scope="col">小計</th>
+        </tr>
+
+        <% @order.orderitems.each do |orderitem| %>
+        <% @orderitem = Product.find(orderitem.product_id) %>
+
+        <tr>
+          <td align="center">1</td>
+          <td align="left"><a href="/admin/products/<%= @orderitem.id %>"><%= @orderitem.name %></a></td>
+          <td align="center"><%= @orderitem.weight %></td>
+          <td align="center"><%= orderitem.amount%></td>
+          <td align="center">$ <%= @orderitem.price * orderitem.amount %>
+          </td>
+        </tr>
+        <% end %>
+
+        <tr>
+          <td align="center">總計</td>
+          <td align="left">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">$<%= @order.totalprice %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="button" style="margin:10px 0">
+      <%= link_to image_tag("/images/back.png")+'返回', admin_orders_path %>
+    </div>
+    <div class="main-text">
+    <table width="100%" border="0" cellspacing="5" cellpadding="0">        
+          <tr>
+            <th width="12%" align="left">處理狀態：</th>
+            <td width="88%" align="left">
+               <%= form_for(@order, :url => admin_order_path(@order), :method => "put") do |f| %>
+               <%= f.check_box :isAdminCheck, :style => "width:15px!important" %>
+               <% end %>
+              </td>
+          </tr>
+           
+      </table>
+    </div>
+  </div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#orders").addClass("active");
+
+  //save order state with ajax when checkbox changes
+  $("#order_isAdminCheck").change(function(){
+    $("form").ajaxSubmit({
+      beforeSubmit: function(a,f,o) {
+      o.dataType = 'json';
+    },
+    complete: function(XMLHttpRequest, textStatus) {
+    },});
+  });
+});
+</script>

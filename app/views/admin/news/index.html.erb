@@ -1,0 +1,39 @@
+<div id="main" class="right">
+  <div class="button"><%= link_to image_tag("/images/add.png")+'新增文章', admin_news_index_path, :method => :post %>
+</div>
+  <div class="main-list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr class="main-list-title">
+        <th width="17%" align="center" scope="col">日期</th>
+        <th width="63%" align="left" scope="col">標題</th>
+        <th width="9%" align="center" scope="col">編輯</th>
+        <th width="9%" align="center" scope="col">刪除</th>
+      </tr>
+
+      <% @news.each do |news| %>
+      <tr>
+        <td align="center"><%= news.created_at.strftime("%Y/%m/%d") %></td>
+        <td align="left"><%= link_to news.name, admin_news_path(news) %></td>
+        <td align="center"><%= link_to image_tag("/images/edit.png"), edit_admin_news_path(news) %></td>
+        <td align="center"><%= link_to image_tag("/images/delete.png"), admin_news_path(news), method: :delete, data: { confirm: '確定刪除消息?' } %></td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="main-page">
+    <ul>
+      <li><a href="#">&lt;</a></li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">&gt;</a></li>
+    </ul>
+  </div><!--main-page-->
+</div>
+<!--main--> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#update").addClass("active");
+});
+</script>

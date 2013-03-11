@@ -1,0 +1,20 @@
+<h1>建立管理者</h1>
+
+<%= form_for(@admin, :url => admin_createAdmin_path(@admin)) do |f| %>
+  <div class="field">
+    <%= f.label :username, "使用者ID" %><br />
+    <%= f.text_field :username, :autocomplete => "off" %>
+  </div>
+  <div class="field">
+    <%= f.label :password, "密碼" %><br />
+    <%= f.password_field :password, :autocomplete => "off" %>
+  </div>
+  <div class="field">
+    <%= f.label :name, "使用者名稱" %><br />
+    <%= f.text_field :name, :autocomplete => "off" %>
+  </div>
+  <br />
+  <div class="actions">
+    <%= f.submit "新增管理者" %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form_for(@product, :url => admin_products_path(@product), :method => "post") do |f| %>
+<%= render :partial => 'form', :locals => { :f => f} %>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#product").addClass("active");
+});
+</script>

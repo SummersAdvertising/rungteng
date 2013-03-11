@@ -1,0 +1,157 @@
+<%= stylesheet_link_tag "order", :media => "all" %>
+<%= form_for(@order, :url=>"/order_check") do |f| %>
+<div id="container" _height="auto">
+  <div id="top">
+    <h2>產品介紹</h2>
+  </div>
+  <!--top-->
+
+  <div id="content"  _height="auto">
+    <div class="article">
+      <input id="order_orderitems" size="300" type="text" name="orderitems" style="display: none;" />
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td colspan="3" height="40">&nbsp;</td>
+        </tr>
+        <% @count = 0 %>
+        <% @items.each do |product| %>
+
+        <% if(!product.admindelete) %>
+          <% @count = @count + 1 %>
+
+          <% if (@count%3 == 1) %>
+            <tr>
+          <% end %>
+
+          <td width="35%">
+            <% if(product.image.path) %>
+            <%= image_tag(product.image_url(:thumb)) %>
+            <%else%>
+            <p>未上傳圖片</p>
+            <% end %>
+
+            <div class="name"><span><%= product.ordernum %></span><%= product.name %></div>
+            <div class="info"> <%= product.weight %> <br />
+                售價 <%= product.price %> 元 </div>
+            <div class="amt"> 我要
+                <input name="amount" autocomplete="off" type="text" data-item="<%= product.id%>" size="3" />
+                包 </div>
+          </td>
+
+          <% if (@count%3 == 0) %>
+          </tr>
+          <tr>
+            <td colspan="3" height="40">&nbsp;</td>
+          </tr>
+          <% end %>
+        
+        <% end %>
+        <% end %>
+        </tr>
+
+        <tr>
+          <td colspan="3" height="40">&nbsp;</td>
+        </tr>
+
+        </table>
+      </div>
+      <!--article-->
+      <div class="article">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <td colspan="3" height="40">&nbsp;</td>
+          </tr>
+        <% @count = 0 %>
+        <% @boxs.each do |product| %>
+
+        <% if(!product.admindelete) %>
+        <% @count=@count+1 %>
+
+          <% if (@count%3 == 1) %>
+            <tr>
+          <% end %>
+
+          <td width="35%">
+            <% if(product.image.path) %>
+            <%= image_tag(product.image_url(:thumb)) %>
+            <%else%>
+            <p>未上傳圖片</p>
+            <% end %>
+
+            <div class="name"><span><%= product.ordernum %></span><%= product.name %></div>
+            <div class="info"><%= simple_format(product.description) %> <br />
+              <%= product.weight %> <br />
+              售價 <%= product.price %> 元 </div>
+            <div class="amt"> 我要
+                <input name="amount" autocomplete="off" type="text" data-item="<%= product.id%>" size="3" />
+                包 </div>
+          </td>
+
+          <% if (@count%3 == 0) %>
+          </tr>
+          <tr>
+            <td colspan="3" height="40">&nbsp;</td>
+          </tr>
+          <% end %>
+
+        
+        <% end %>
+        <% end %>
+        </tr>
+
+        <tr>
+          <td colspan="3" height="40">&nbsp;</td>
+        </tr>
+
+        </table>
+      </div>
+      <div id="checkout"> <a href="#">結帳</a> </div>
+    </div>
+    <!--content--> 
+  </div>
+  <!--container-->
+  
+<% end %>
+
+<script type="text/javascript">
+ $(document).ready(function(){
+  $("#banner ul li").eq(5).addClass("select");
+
+  $("input[name='amount']").change(function(){
+    recordOrderitems();
+  });
+
+  $("#checkout").click(function(event){
+    $("form").submit();
+    event.preventDefault();
+  });
+
+  $("form").submit(function(){
+    if($("#order_orderitems").val() == ""){
+      alert("請選擇商品");
+      return false;
+    }
+  });
+
+  function recordOrderitems(){
+    var orderlist = [];
+
+    $("input[name='amount']").each(function(){
+      if($(this).val() && parseInt($(this).val())>0){
+        var orderitem = new Object();
+        orderitem.id = String($(this).data("item"));
+        orderitem.amount = $(this).val();
+
+        orderlist.push(JSON.stringify(orderitem));
+      }
+      else if(parseInt($(this).val())<0){
+        alert("訂購數量錯誤");
+        $(this).val("");
+      }
+    });
+
+    $("#order_orderitems").val(orderlist);
+  }
+
+ });
+ </script>

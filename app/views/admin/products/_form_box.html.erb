@@ -1,0 +1,125 @@
+<div id="main" class="right">
+  <div class="main-title">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="top" class="title" height="22" width="70"><%= f.label :name, '產品名稱' %></td>
+        <td valign="middle" class="text"><%= f.text_field :name, :autocomplete => "off" %></td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="main-text">
+    <table width="100%" border="0" cellspacing="5" cellpadding="0">
+      <tr>
+        <th width="9%"><%= f.label :ordernum, '編號' %></th>
+        <td width="9%" align="center"><%= f.text_field :ordernum, :autocomplete => "off" %></td>
+        <th width="9%"><%= f.label :weight, '重量' %></th>
+        <td width="9%" align="center"><%= f.text_field :weight, :autocomplete => "off" %></td>
+        <th width="9%"><%= f.label :price, '售價' %></th>
+        <td width="9%" align="center"><%= f.number_field :price %></td>
+        <th colspan="2" rowspan="2" width="46%">&nbsp;</th>
+      </tr>
+      <tr>
+        <th width="9%" valign="top">內容</th>
+        <td colspan="7" align="left" width="91%">
+          <%= f.text_area :description, :autocomplete => "off" %>
+        </td>
+      </tr>
+      <tr>
+        <th width="9%"><%= f.label :image, '圖片' %></th>
+        <td colspan="7" align="left"><%= f.file_field :image %></td>
+        <td>
+          <% if(@product.image.path) %>
+          <%= image_tag(@product.image_url(:thumb)) %>
+          <%else%>
+          <p>尚未上傳商品封面圖片</p>
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="error">
+    <% if flash[:notice] %>
+    <p>商品資料已更新</p>
+    <% end %>
+  </div>
+
+  <div class="button" id="btnSubmit"><a href="#"><img src="/images/save.png">儲存</a></div>
+  <div class="button"><%= link_to image_tag("/images/cancel.png")+'取消', admin_boxs_path %></div>
+</div>
+<!--main--> 
+
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<script>
+  $(document).ready(function(){
+     $( "#product_addDate" ).datepicker();
+     $( "#product_addDate" ).change(function(){
+      $(this).datepicker("option", "dateFormat", "yy-mm-dd");
+     });
+
+     $("#btnSubmit").click(function(){
+      $("form").submit();
+     });
+
+     $("form").submit(function(){
+      $("#error").html("");
+      var submit = true;
+
+      $("form input:not(input[type = file])").not("#product_addDate").each(function(){
+        if(!$(this).val()){
+          submit = false;
+          $("#error").append("<p>" + $("label[for='"+$(this).attr('id')+"']").html() + "不能為空</p>");
+        }
+        if($(this).attr('id')=="product_price" && parseInt($(this).val())<=0){
+          submit = false;
+          $("#error").append("<p>商品價格必須是正整數</p>");
+        }
+      });
+
+      if($("#product_fruitType").val() == "0"){
+        submit = false;
+        $("#error").append("<p>請選擇商品分類</p>");
+      }
+
+      return formvalidate() && submit;
+     });
+
+     function formvalidate(){
+      //validate image upload
+      var isPass = false; 
+      var alert;
+
+      var fileinput = document.getElementById('product_image');
+      if(fileinput.files[0]){
+        var typeAllowed = ["gif", "png", "jpg", "jpeg"];
+
+        (function() {
+          outerloop:
+          for(var item in typeAllowed){
+            if(fileinput.files[0].type.indexOf(typeAllowed[item]) != -1){
+              isPass = true;
+              break outerloop;
+            }
+          }
+        })();
+
+        alert = isPass? null : "<p>只能上傳 .gif, .png, .jpg 圖片檔</p>";
+
+        if(fileinput.files[0].size > 2 * 1024 *1024){
+          isPass = false;
+          alert += "<p>檔案大小必須小於2MB</p>";
+        }
+        if(!isPass){
+          $("#error").append(alert);
+          $(fileinput).val(""); 
+          return false;
+        }
+      }
+      return true;
+     }
+   });
+</script>
+

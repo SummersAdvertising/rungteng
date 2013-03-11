@@ -1,0 +1,52 @@
+<div id="main" class="right">
+  <%= form_for(@admin, :url => "/admin/update", :action => "put") do |f| %>
+  <h2><img src="/images/signin.png"/> 修改個人資料</h2>
+  <div class="main-form">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="48%" align="left">帳號<br />
+          <%= f.text_field :username, :autocomplete => "off" %>
+        </td>
+        <td width="3%" align="left">&nbsp;</td>
+        <td width="49%" align="left">新密碼<br />
+          <%= f.password_field :password, :autocomplete => "off" %>
+        </td>
+      </tr>
+      <tr>
+        <td align="left">姓名<br />
+          <%= f.text_field :name, :autocomplete => "off" %></td>
+        <td align="left">&nbsp;</td>
+        <td align="left">確認新密碼<br />
+          <input id="pswCheck" type="password" name="textfield" /></td>
+      </tr>
+    </table>
+  </div>
+  <!--main-form-->
+<% end %>
+
+<div id="error">
+  <% if flash[:notice] %>
+  <p>管理者資料已更新</p>
+  <% end %>
+</div>
+
+<div class="button" id="btnSubmit"><a href="#"><img src="/images/save.png">儲存</a></div>
+<div class="button"><a href="#"><img src="/images/cancel.png">取消</a></div>
+</div>
+<!--main-->
+
+<script type="text/javascript">
+$("#btnSubmit").click(function(){
+	$("form").submit();
+});
+$("form").submit(function(){
+	var check = ($("#admin_password").val()==$("#pswCheck").val());
+	if(check == false){
+		$("#error").html("密碼不一致, 更新失敗");
+		$("#admin_password").val("");
+		$("#pswCheck").val("");
+	}
+	return check;
+});
+
+</script>

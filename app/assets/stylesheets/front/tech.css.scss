@@ -1,0 +1,24 @@
+#header{height:1855px}
+#container{height:1855px;overflow:hidden}
+
+h2{background:image-url('tn-h2.jpg') 0 0 no-repeat #221E1F;height:85px;text-indent:-9999px;border-top:40px solid #EA5504}
+
+#nav{overflow:hidden;border-bottom:1px solid #83807F;padding:10px 0 0 0;width:825px;margin:0 auto;background:image-url('cbg.jpg') repeat}
+#nav li{float:left;padding:3px 10px;border-left:1px solid #83807F}
+#nav li:nth-child(1){border:0}
+#nav li a{font:300 13px "新細明體";text-shadow:0 1px 0 #fff;color:#9FA0A0}
+#nav li a:hover{color:#000}
+#nav .select a{color:#7D0000}
+
+#top{height:125px}
+#content{width:760px;margin:0 auto}
+.article{border-top:1px solid #fff;border-bottom:1px solid #7F7F7F}
+.article h3{font:900 23px "新細明體";line-height:1.4em}
+.article strong{font:900 23px "新細明體";color:#E60012}
+.article p{padding:10px 0;font:300 15px "微軟正黑體";line-height:1.7em}
+.article span{font:900 13px "微軟正黑體"}
+
+.dcr{position:absolute}
+#dcr-1{width:357px;height:239px;background:image-url('tn-05.png');top:550px;right:-120px}
+#dcr-2{width:413px;height:313px;background:image-url('tn-06.png');top:940px;left:-80px}
+#dcr-3{width:392px;height:632px;background:image-url('tn-07.png');top:750px;right:0}

@@ -1,0 +1,43 @@
+<div id="main" class="right">
+  <div class="main-list">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr class="main-list-title">
+        <th width="17%" align="center" scope="col">日期</th>
+        <th width="63%" align="left" scope="col">姓名</th>
+        <th width="9%" align="center" scope="col">處理</th>
+        <th width="9%" align="center" scope="col">刪除</th>
+      </tr>
+
+      <% @orders.each do |order| %>
+      <tr>
+        <td align="center"><%= order.created_at.to_date %></td>
+        <td align="left"><%= link_to order.order_name, admin_order_path(order) %></td>
+        <td align="center">
+          <% if(order.isAdminCheck) %>
+          <%= image_tag("/images/check.png") %>
+          <% end %>
+        </td>
+        <td align="center">
+          <%= link_to image_tag("/images/delete.png"), admin_order_path(order), :method => :delete , data: { confirm: '確定刪除留言?' } %>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+  <div class="main-page">
+    <ul>
+      <li><a href="#">&lt;</a></li>
+      <li class="active"><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">&gt;</a></li>
+    </ul>
+  </div><!--main-page-->
+</div>
+<!--main-->
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#orders").addClass("active");
+});
+</script>

@@ -1,0 +1,25 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  totalprice: 1
+  order_name: MyString
+  order_phone: MyString
+  order_companytaxID: 1
+  order_email: MyString
+  receive_name: MyString
+  receive_phone: MyString
+  receive_address: MyString
+  receive_date: 2013-02-27
+  receive_time: MyString
+
+two:
+  totalprice: 1
+  order_name: MyString
+  order_phone: MyString
+  order_companytaxID: 1
+  order_email: MyString
+  receive_name: MyString
+  receive_phone: MyString
+  receive_address: MyString
+  receive_date: 2013-02-27
+  receive_time: MyString

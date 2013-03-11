@@ -1,0 +1,10 @@
+if(<%=  @photo.errors.any? %>){
+	alert("this photo is already existed");
+}
+else{
+	newImage("<%= @photo.id %>","<%= @photo.image %>");
+}
+
+$('#new_newsphoto').each (function(){
+	this.reset();
+});

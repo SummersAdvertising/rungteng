@@ -1,0 +1,37 @@
+<%= stylesheet_link_tag "news", :media => "all" %>
+<div id="container" _height="auto">
+    <div id="top">
+      <h2>最新資訊</h2>      
+    </div>
+    <!--top-->
+    <div id="content"  _height="auto">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <% @news.each do |news| %>
+      <tr>
+        <td width="20%" class="date"><%= news.created_at.strftime("%Y-%m-%d") %></td>
+        <td width="80%"><%= link_to news.name, news %></td>
+      </tr>
+      <% end %>
+    </table>
+
+<div id="page">
+    <ul>
+    <li><a href="#">&lt;</a></li>
+    <li class="active"><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>    
+    <li><a href="#">&gt;</a></li>
+    </ul>
+    </div>
+
+    </div>
+    <!--content--> 
+    
+  </div>
+  <!--container--> 
+
+<script type="text/javascript">
+$("#banner ul li").eq(3).addClass("select");
+</script>

@@ -1,0 +1,53 @@
+<div id="main" class="right">
+    
+    <div class="main-category" style="margin-bottom:10px">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td class="title" height="27" width="16%">產品分類</td>
+          <td class="text" width="84%"><a href="/admin/products">單品</a><a href="/admin/boxs" class="active">禮盒</a></td>
+        </tr>
+      </table>
+    </div>
+    <div class="button">
+      <%= link_to image_tag("/images/add.png")+'新增品項', admin_boxs_new_path %>
+    </div>
+    <div class="main-list">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr class="main-list-title">
+          <th width="8%" align="center" scope="col">編號</th>
+          <th width="63%" align="left" scope="col">產品名稱</th>
+          <th width="9%" align="center" scope="col">重量</th>
+          <th width="9%" align="center" scope="col">編輯</th>
+          <th width="9%" align="center" scope="col">刪除</th>
+        </tr>
+
+        <% @products.each do |product| %>
+        <% if(!product.admindelete) %>
+        <tr>
+          <td align="center"><%= product.ordernum %></td>
+          <td align="left"><a href="/admin/products/<%= product.id %>"><%= product.name %></a></td>
+          <td align="center"><%= product.weight %></td>
+          <td align="center">
+            <a href="/admin/boxs/<%= product.id %>/edit" data-method="put"><%= image_tag("/images/edit.png") %></a>
+          </td>
+          <td align="center"><%= link_to image_tag("/images/delete.png"), admin_product_path(product), method: :delete, data: { confirm: '確定要刪除這項商品?' } %></td>
+        </tr>
+        <% end %>
+        <% end %>
+      </table>
+    </div>
+    <div class="main-page">
+      <ul>
+          <li><a href="#">&lt;</a></li>
+            <li class="active"><a href="#">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">&gt;</a></li>
+        </ul>
+    </div><!--main-page-->
+
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#product").addClass("active");
+});
+</script>

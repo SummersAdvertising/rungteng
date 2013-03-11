@@ -1,0 +1,138 @@
+<%= stylesheet_link_tag "home", :media => "all" %>
+
+<div id="container" _height="auto">
+    <ul id="accordion-slider">
+      <li id="f1">
+        <h2>色</h2>
+        <div class="content">
+          <h3>色</h3>
+          <div class="recipe">
+            <h4>當壽喜燒與掛川酵母豚相遇<br>
+              連舌尖也樂得唱起和風民謠</h4>
+            <p>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2">【壽喜燒】</td>
+              </tr>
+              <tr>
+                <td width="11%" align="left" valign="top">材料：</td>
+                <td width="89%" align="left" valign="top">梅花肉、洋蔥切絲、大蔥斜段〈約 3 公分〉<br />
+                  日式醬汁、水、油</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top">作法：</td>
+                <td align="left" valign="top">1. 放少許的油炒香洋蔥絲和大蔥斜段<br />
+                  2. 再放日式醬汁和水〈約 1：1〉，可依口味做調整<br />
+                  3. 最後加入梅花肉約煮 7 秒，梅花肉熟透即可 </td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+            </table>
+            </p>
+          </div>
+          <!--recipe--> 
+        </div>
+        <!--content--> 
+      </li>
+      <!--f1-->
+      <li id="f2">
+        <h2>香</h2>
+        <div class="content">
+          <h3>色</h3>
+          <div class="recipe">
+            <h4>香噴噴的黃金日式炸豬排是小朋友的最愛</h4>
+            <p>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2">【日式炸豬排】</td>
+              </tr>
+              <tr>
+                <td width="11%" align="left" valign="top">材料：</td>
+                <td width="89%" align="left" valign="top">大里肌 200 克、低筋麵粉 100 克、蛋液 2 顆、<br />
+                  大豆沙拉油、日式炸物沾醬、<br />
+                  自製麵包粉〈非一般市面上販賣乾的麵包粉〉</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top">作法：</td>
+                <td align="left" valign="top">1. 大里肌先用肉槌拍打讓肉鬆軟<br />
+                  2. 大里肌先沾低筋麵粉，再沾蛋液，最後沾新鮮麵包粉即可<br />
+                  3. 最後 140 ~ 150℃ 的油鍋中，炸到豬排浮上來，且兩面<br />
+　金黃，然後轉大火逼油，再把豬排撈起來瀝油即可<br />
+<br />
+自製麵包粉作法：1. 將切邊吐司撕小塊 2. 放入內部乾燥的果汁機以瞬間加速方式攪打 3. 稍作攪拌，再次攪打即完成
+
+
+ </td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+            </table>
+            </p>
+          </div>
+          <!--recipe--> 
+        </div>
+      </li>
+      <li id="f3">
+        <h2>味</h2>
+        <div class="content">
+          <h3>色</h3>
+          <div class="recipe">
+            <h4>鮮香的原味昆布火鍋<br>
+              最能帶出掛川完熟酵母豚的鮮甜滋味</h4>
+            <p>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td colspan="2">【原味昆布火鍋】</td>
+              </tr>
+              <tr>
+                <td width="11%" align="left" valign="top">材料：</td>
+                <td width="89%" align="left" valign="top">頂級五花肉火鍋片、日本昆布〈適量〉、日式醬汁、水</td>
+              </tr>
+              <tr>
+                <td align="left" valign="top">作法：</td>
+                <td align="left" valign="top">1. 水煮滾放入昆布，煮約 6 ~ 7 分鐘<br />
+                  2. 汆燙肉片時，水保持小滾狀態，放入 40 克肉片燙 7 秒即<br />
+　可〈肉不要燙過熟〉<br />
+                  3. 將燙好豬肉再沾上日式醬汁食用即可<br />
+                  </td>
+              </tr>
+              <tr>
+                <td align="left" valign="top">備註：</td>
+                <td align="left" valign="top">1. 肉不要燙過熟，否則肉會太硬<br />
+   					2. 肉片一次不要放太多，以免汆燙熟度會不均勻</td>
+              </tr>
+              <tr>
+                <td colspan="2">&nbsp;</td>
+              </tr>
+            </table>
+            </p>
+          </div>
+          <!--recipe--> 
+        </div>
+      </li>
+    </ul>
+    <!--accordion-slider--> 
+  </div>
+  <!--container-->
+
+  <script>
+ $(document).ready(function() {
+ $('#accordion-slider').kwicks({
+	event: 'click',
+	duration: 1000,
+ 	max : 930,
+ 	spacing : 93
+ }); 
+ 
+ $('#accordion-slider li').mouseover(function(){			
+		$(this).siblings().stop().animate({"opacity":".5"},250)
+ });
+ $('#accordion-slider li').mouseleave(function(){			
+		$(this).siblings().stop().animate({"opacity":"1"},250)
+ });
+ 
+ 
+})
+</script>

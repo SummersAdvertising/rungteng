@@ -1,0 +1,390 @@
+<style type="text/css">
+img{
+  max-width:480px;
+}
+</style>
+
+<!--side-->
+<div id="main" class="right">
+  <div class="main-title">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td valign="top" class="title" height="22" width="98"><%= DateTime.now.to_date %></td>
+        <td valign="middle" class="text"><input id="news_title" type="text" /></td>
+      </tr>
+    </table>
+  </div>
+
+  <ul id="tab">
+    <li data-name="paragraph"><a href="#main-text-p"><img src="/images/edit.png">插入段落</a></li>
+    <li data-name="image"><a href="#main-text-img"><img src="/images/img.png"/>插入圖片</a></li>
+  </ul>
+
+  <div class="main-text">
+    <div id="main-text-p">
+       <textarea id="newParagraphContent" class="autogrow" placeholder="請將段落輸入在此處"></textarea>
+    </div>
+    <div id="main-text-img">
+      <%= form_for (@photo), :url => 'uploadPhoto', :html => {:multipart => true, :remote => true} do |p| %>
+      <%= p.file_field :image, :class => "autogrow" %>
+      <div id="error"></div>
+      <% end %>
+    </div>
+  </div>
+  <div class="button" id="btnAddElement"><a href="#"><img src="/images/add.png">新增</a></div>
+
+
+  <div id="tips">
+    <h2>文章預覽</h2>
+    <p> <img src="/images/tag.png"/>提示：將滑鼠移至段落內容，可進行拖曳排序以及修改刪除。</p>
+  </div>
+
+  <div class="main-preview">
+    <%= form_for(@news, :url => admin_news_path(@news), :method => "put") do |f| %>
+    <div style="display: none;">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+    <%= f.label :content %>
+    <%= f.text_field :content %>
+    <input id="news_contentOrigin" type="text" value="test">
+    </div>
+
+    <!--show the content of article -->
+    <div id="articleContent" class="sortable"></div>
+    
+    <% end %>
+
+    <div id='error'></div>
+
+    <div class="buttonArea">
+      <div class="button" id="btnSubmit"><a href="#"><img src="/images/save.png">儲存</a></div>
+      <div class="button" id="btnCancel"><a href="#"><img src="/images/cancel.png">取消</a></div>
+    </div>
+    <!--main-text--> 
+  </div>
+  <!--main-->
+
+
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function(){
+  $("#update").addClass("active");
+
+  // 預設顯示第一個 Tab
+  var _showTab = 0;
+  var $defaultLi = $('#tab li').eq(_showTab).addClass('active');
+  $($defaultLi.find('a').attr('href')).siblings().hide();
+ 
+  // 當 li 頁籤被點擊時...
+  // 若要改成滑鼠移到 li 頁籤就切換時, 把 click 改成 mouseover
+  $('#tab li').click(function() {
+    // 找出 li 中的超連結 href(#id)
+    var $this = $(this),
+      _clickTab = $this.find('a').attr('href');
+    // 把目前點擊到的 li 頁籤加上 .active
+    // 並把兄弟元素中有 .active 的都移除 class
+    $this.addClass('active').siblings('.active').removeClass('active');
+    // 淡入相對應的內容並隱藏兄弟元素,把.show()改成.hide()
+    $(_clickTab).stop(false, true).fadeIn().siblings().hide();
+ 
+    return false;
+    }).find('a').focus(function(){
+      this.blur();
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+  var form = "#edit_news_<%= params[:id]%>";
+
+  //record the origin content
+  $("#news_contentOrigin").val($("#news_content").val());
+  $("#news_title").val($("#news_name").val());
+
+  //show content
+  showContent();
+
+  $("#btnAddElement").click(function(event){
+    var liList = $("#tab li");
+
+    for(var arrayLength = liList.length, i = 0; i<arrayLength; i++){
+      if($(liList[i]).hasClass("active")){
+        switch($(liList[i]).data("name")){
+          case "paragraph":
+            addParagraph();
+            break;
+          case "image":
+            addImage();
+            break;
+        }
+        break;
+      }
+      
+    }
+    bindEdit();
+    event.preventDefault();
+    
+  });
+
+  function addParagraph(){
+    if($("#newParagraphContent").val()){
+      var container = $('<div class="paragraphContainer ui-state-default dragItem" data-type="paragraph"><div class="edit"><a name="edit">編輯</a><a name="delete">刪除</a></div></div>');
+      var paragraph = $("<p class='paragraph'>" + $("#newParagraphContent").val().replace(/\n/g, "<br />") + "</p>");
+      container.append(paragraph);
+
+      $("#articleContent").append(container);
+      $("#newParagraphContent").val('');
+
+      saveArticle();
+    }
+    else{
+      alert("請輸入內容");
+    }
+  }
+
+  function addImage(){
+    if($("#newsphoto_image").val()){
+      $("#new_newsphoto").submit();
+    }
+    else{
+      alert("請選擇要上傳的檔案");
+    }
+    
+  }
+
+  //validate image upload
+  $("#new_newsphoto").submit(function(){
+    $("#error").html("");
+      return formvalidate();
+  });
+
+  function formvalidate(){
+    //validate image upload
+    var isPass = false;
+    var alert;
+
+    var fileinput = document.getElementById('newsphoto_image');
+    if(fileinput.files[0]){
+      var typeAllowed = ["gif", "png", "jpg", "jpeg"];
+
+      (function() {
+        outerloop:
+        for(var item in typeAllowed){
+          if(fileinput.files[0].type.indexOf(typeAllowed[item]) != -1){
+            isPass = true;
+            break outerloop;
+          }
+        }
+      })();
+
+      alert = isPass? null : "<p>只能上傳 .gif, .png, .jpg 圖片檔</p>";
+
+      if(fileinput.files[0].size > 5 * 1024 *1024){
+        isPass = false;
+        alert += "<p>檔案大小必須小於5MB</p>";
+      }
+      if(!isPass){
+        $("#error").append(alert);
+        $(fileinput).val(""); 
+        return false;
+      }
+    }
+    return true;
+  }
+
+  function newImage(photoID,photoPath){
+    $("#articleContent").append('<div class="paragraphContainer ui-state-default dragItem" data-type="image" data-photo_id="'+ photoID +'"><div class="edit"><a href="/admin/news/<%= @news.id %>/deletePhoto/' + photoID + '" data-method="delete" rel="nofollow" data-remote="true">刪除</a></div><img src="'+photoPath+'" alt="'+photoID+'" /></div>');
+    $('#new_photo').each (function(){
+      this.reset();
+    });
+
+    saveArticle();    
+  }
+
+  $("#newVideo").click(function(event) {    
+    if( $("#newVideoContent").val() ){    
+      var container = $('<div class="paragraphContainer ui-state-default dragItem" data-type="video"></div>');
+      var code = getYoutubeCode( $("#newVideoContent").val());
+      var paragraph = $('<iframe width="480" height="290" data-code="' + code + '" src="http://www.youtube.com/embed/' + code + '" frameborder="0" allowfullscreen></iframe>');
+      container.append(paragraph);
+
+      $("#articleContent").append(container);
+      $("#newVideoContent").val('');
+      $("#videoPreview").html('');
+
+      saveArticle();
+    }
+    else{
+      alert("請輸入內容");
+    }
+    event.preventDefault();
+  });
+
+  // Video preview
+  $('#newVideoContent').change(function() {
+    var code = getYoutubeCode( $(this).val() );
+    $('#videoPreview').append('<iframe width="320" height="220" data-code="' + code + '" src="http://www.youtube.com/embed/' + code + '" frameborder="0" allowfullscreen></iframe>');
+  });
+
+  function getYoutubeCode( link ) {
+    if ( link != undefined ) {
+      return /[a-zA-Z0-9\?\.\:\/]+v=([a-zA-Z0-9_\-]+)&?.*/.exec(link)[1];
+    }
+    return '';
+  }
+
+  /* paragraphs sortable */
+  $( ".sortable" ).sortable({
+    placeholder: "ui-state-highlight",
+    stop: function( event, ui ) {saveArticle();}
+  });
+
+  var editingFlag = false;
+  bindEdit();
+  function bindEdit(){
+    /* edit or delete the paragraphs */
+  $("div.edit a[name=edit]").click(function(){
+    if(!editingFlag){
+      editingFlag = true;
+      $(".buttonArea").hide();
+      var paragraph = $(this).parent().next();
+
+      $(this).parent().parent().append("<div id='editDiv'><textarea id='editedContent' rows='4' cols='50'></textarea><br /><input type='button' id='editFinish' value='完成修改'/> <input type='button' id='editCancel' value='取消'/></div>");
+
+      //avoid content in textbox can't not be editted due to the using of jquery sortable
+      $( "#editedContent" ).disableSelection();
+
+      $("#editedContent").html(br2nl($(paragraph).html()));
+      $(paragraph).hide();
+
+      $("#editFinish").click(function(){
+        if($("#editedContent").val()){
+          $(this).parent().prev().html(nl2br($("#editedContent").val())).show();
+          $("#editDiv").remove();
+          saveArticle();
+          editingFlag = false;
+          $(".buttonArea").show();
+        }
+        else{
+          $("#editedContent").val(br2nl($(paragraph).html()));
+        }
+      });
+
+      $("#editCancel").click(function(){
+        $(this).parent().prev().show();
+        $("#editDiv").remove();
+        editingFlag = false;
+        $(".buttonArea").show();
+      });
+    }
+  });
+
+  $("div.edit a[name=delete]").click(function(){
+    $(this).parent().parent().remove();
+    saveArticle();
+  });
+  }
+
+  /* save and update the article */
+  function contentPack(){
+    var article = "";
+    var obj = new Object();
+    obj.article = new Array();
+
+    $("#articleContent .paragraphContainer").children().each(function(){
+      if($(this).is("p")){
+        var p = new Object();
+        p.type = "paragraph";
+        p.content=$(this).html();
+        obj.article.push(p);
+      }
+      else if ($(this).is("img")){
+        var img = new Object();
+        img.type = "image";
+        img.path = $(this).attr("src");
+        img.id = $(this).attr("alt");
+        obj.article.push(img);
+      }
+      else if ($(this).is("iframe")) {
+        var video = new Object();
+        video.type = "video";
+        video.code = $(this).data("code");
+        obj.article.push(video);
+      }
+    });
+
+    article = JSON.stringify(obj);
+    $("#news_content").val(article);
+  }
+
+  function saveArticle(){
+    contentPack();
+
+    $(form).ajaxSubmit({
+      beforeSubmit: function(a,f,o) {
+        o.dataType = 'json';
+      },
+      complete: function(XMLHttpRequest, textStatus) {
+      }
+    });
+  }
+
+  function showContent(){
+    if($("#news_content").val())
+    {
+      var obj = jQuery.parseJSON($("#news_content").val());
+      var article = "";
+      for(i=0;i<obj.article.length;i++)
+      {
+        var paragraph = obj.article[i];
+
+        if(JSON.stringify(paragraph.type)=='"paragraph"')
+        {
+          article = "<div class='paragraphContainer ui-state-default dragItem' data-type='paragraph'><div class='edit'><a name='edit'>編輯</a><a name='delete'>刪除</a></div><p>"+jsonReplace(JSON.stringify(paragraph.content)).replace(/\\n/g, "<br />")+"</p></div>";
+        }
+        else if(JSON.stringify(paragraph.type)=='"image"')
+        {
+          article = "<div  class='paragraphContainer ui-state-default dragItem' data-type='image' data-photo_id=\"" + paragraph.id + "\"><div class='edit'><a href='/admin/news/<%=@news.id %>/deletePhoto/" + paragraph.id + "' data-method='delete' rel='nofollow' data-remote='true'>刪除</a></div><img alt=" + JSON.stringify(paragraph.id) + " src=" + JSON.stringify(paragraph.path) + " title=" + JSON.stringify(paragraph.id) + " /></div>";
+        }
+
+        $("#articleContent").append(article);
+
+      }//end of for.
+    }//end of if.
+  }
+
+  function jsonReplace(string){return string.replace(/"([^"]*)"/g, "$1");}
+
+  function nl2br(string) { return string.replace(/\n/g, "<br />");}
+  function br2nl(string) { return string.replace(/<br[ \/]*>/g, "\n");}
+
+  $("#btnSubmit").click(function(){
+    $("#news_name").val($("#news_title").val());
+    $(form).submit();
+  });
+
+  $("#btnCancel").click(function(){
+    $("#news_content").val($("#news_contentOrigin").val());
+    $(form).submit();
+  });
+
+
+  //validate when submit
+  $(form).submit(function(){
+    var submit = true;
+    $("#error").html("");
+    $("#news_frontshow").val("true");
+
+    $(form + " input[type='text']").each(function(){
+      if(!$(this).val()){
+        submit = false;
+        $("#error").append("<p>" + $("label[for='"+$(this).attr('id')+"']").html() + "不能為空</p>");
+      }
+    });
+
+    return submit;
+  });
+
+
+</script>

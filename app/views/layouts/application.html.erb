@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>榮騰農產</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+
+  <script>
+  $(document).ready(function() {
+    $("body").css("display", "none");
+    $("body").fadeIn(1000);
+  });
+  </script>
+</head>
+<body>
+  <div id="wrapper">
+  	<div id="header" _height="auto">
+  		<div id="banner">
+  			<h1><a href="/home">掛川完熟酵母豚</a></h1>
+  			<ul>
+  				<li><a href="/about">關於榮騰</a></li>
+  				<li><a href="/technology">獨家技術</a></li>
+  				<li><a href="/product">產品介紹</a></li>
+  				<li><a href="/news">最新資訊</a></li>
+  				<li><a href="/link">友站連結</a></li>
+  				<li><a href="/orders">我要訂購</a></li>
+  			</ul>
+  		</div>
+  		<!--banner-->
+
+  		<div id="footer">
+  			<div id="social"> <a href="#"><img src="/images/fb.png" width="38" height="38" /></a> <a href="#"><img src="/images/tw.png" width="38" height="38" /></a> <a href="#"><img src="/images/pl.png" width="28" height="38" /></a></div>
+
+  			<div id="info"> <strong>榮騰農產股份有限公司</strong><br />
+  				Long Term Yeast Co., Ltd.<br />
+  				地址: 台北市衡陽路108號3樓之7<br />
+  				電話: (02)2382-0966
+  			</div>
+  		</div>
+  		<!--footer-->
+  	</div>
+  	<!--header-->
+
+  	<%= yield %>
+
+</div>
+<!--wrapper-->
+</body>
+</html>

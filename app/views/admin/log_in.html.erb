@@ -1,0 +1,28 @@
+<div id="main" class="main-sign">
+    <h2><img src="/images/man.png" width="16" height="16" /> 使用者登入</h2>
+    <%= form_for(@admin, :url => admin_loginCheck_path(@admin)) do |f| %>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td colspan="2" align="left">帳號<br>
+          <%= f.text_field :username, :autocomplete => "off" %></td>
+      </tr>
+      <tr>
+        <td colspan="2" align="left">密碼<br>
+          <%= f.password_field :password, :autocomplete => "off" %></td>
+      </tr>
+    </table>
+    <% end %>
+
+    <% if session[:notice] %>
+    <p class='notice'>請輸入正確的帳號及密碼</p>
+    <% end %>
+
+    <div class="button" id="btnLogin"><a href="#"><img src="/images/login.png">登入</a></div>
+  </div>
+  <!--main--> 
+
+<script type="text/javascript">
+$("#btnLogin").click(function(){
+  $("form").submit();
+});
+</script>

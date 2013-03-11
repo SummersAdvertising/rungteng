@@ -1,0 +1,65 @@
+<%= stylesheet_link_tag "news-article", :media => "all" %>
+
+<div id="container" _height="auto">
+  <div id="top">
+    <h2>最新資訊</h2>
+  </div>
+  <!--top-->
+
+  <div id="content"  _height="auto">
+    <h3><%= @news.name %></h3>
+    
+    <input id="news_content" style="display:none;" type="text" value="<%=@news.content%>">
+    <div id="articleContent"></div>
+
+  </div>
+  <!--content-->
+</div>
+<!--container--> 
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $("#banner ul li").eq(3).addClass("select");
+
+  showContent(initColorbox);
+  function showContent(callback){
+    if($("#news_content").val())
+    {
+      var obj = jQuery.parseJSON($("#news_content").val());
+      var article = "";
+      for(i=0;i<obj.article.length;i++)
+      {
+        var paragraph = obj.article[i];
+
+        if(JSON.stringify(paragraph.type)=='"paragraph"')
+        {
+          article = "<div class='paragraphContainer' data-type='paragraph'><p>"+jsonReplace(JSON.stringify(paragraph.content)).replace(/\\n/g, "<br />")+"</p>";
+        }
+        else if(JSON.stringify(paragraph.type)=='"image"')
+        {
+          article = "<div class='paragraphContainer' data-type='image' data-photo_id=\"" + paragraph.id + "\"><a class='shadowbox' href='#'><img alt=" + JSON.stringify(paragraph.id) + " src=" + JSON.stringify(paragraph.path) + " title=" + JSON.stringify(paragraph.id) + " /></a></div>";
+        }
+        else if (JSON.stringify(paragraph.type)=='"video"') {
+          article = "<div  class='paragraphContainer' data-type='video' data-code=\"" + paragraph.code + "\"><iframe width=\"480\" height=\"290\" data-code=\"" + paragraph.code + "\" src=\"http://www.youtube.com/embed/" + paragraph.code+ "\" frameborder=\"0\" allowfullscreen></iframe></div>";
+        }
+        $("#articleContent").append(article);
+      }
+
+      callback();
+    }
+  }
+
+  function jsonReplace(string){return string.replace(/"([^"]*)"/g, "$1");}
+
+  function initColorbox(){
+    $('a.shadowbox').colorbox({
+      scalePhotos: true,
+      maxWidth: "1000px",
+      className: "normal",
+      scrolling: false,
+      returnFocus: false
+    });
+  }
+  
+});
+</script>
