@@ -9,7 +9,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   after :store, :delete_tmp_dir
 
   # resize all the upload pics
-  process :resize_to_limit => [800, nil]
+  process :resize_to_limit => [360, nil]
 
   version :thumb, :if => :isProduct? do
     process :resize_to_fill => [170, 125]
