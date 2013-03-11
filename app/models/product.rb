@@ -3,7 +3,7 @@ class Product < ActiveRecord::Base
   has_many :orderitems
   has_many :orders, :through => :orderitems
 
-  paginates_per 10
+  paginates_per 15
 
   mount_uploader :image, ImageUploader
 end

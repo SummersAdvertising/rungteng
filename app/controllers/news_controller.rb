@@ -1,7 +1,7 @@
 class NewsController < ApplicationController
 
   def index
-    @news = News.order('created_at DESC').page(params[:page])
+    @news = News.order('created_at DESC').page(params[:page]).per(17)
 
     respond_to do |format|
       format.html # index.html.erb
