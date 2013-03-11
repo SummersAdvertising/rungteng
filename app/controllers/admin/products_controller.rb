@@ -2,7 +2,7 @@ class Admin::ProductsController < ApplicationController
   before_filter :require_is_admin
   layout 'admin'
   def index
-    @products = Product.where("producttype = ?", "item").order('ordernum ASC, updated_at DESC, created_at DESC')
+    @products = Product.where("producttype = ?", "item").order('ordernum ASC, updated_at DESC, created_at DESC').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -11,7 +11,7 @@ class Admin::ProductsController < ApplicationController
   end
 
   def index_box
-    @products = Product.where("producttype = ?", "box").order('ordernum ASC, updated_at DESC, created_at DESC')
+    @products = Product.where("producttype = ?", "box").order('ordernum ASC, updated_at DESC, created_at DESC').page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb

@@ -33,8 +33,7 @@ namespace :deploy do
 end
 
 before("deploy:finalize_update") do
-	db_config = "#{shared_path}/config/database.yml"
-	#db_config = "#{db_config} #{release_path}/config/database.yml.production"
+	db_config = "#{shared_path}/config/database.yml.production"
 	run "cp #{db_config} #{release_path}/config/database.yml"	
 end
 

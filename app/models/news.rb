@@ -6,6 +6,8 @@ class News < ActiveRecord::Base
   before_destroy :remember_id
   after_destroy :remove_id_directory
 
+  paginates_per 10
+
   protected
   def remember_id
     @id = id

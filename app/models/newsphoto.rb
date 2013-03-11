@@ -1,7 +1,6 @@
 class Newsphoto < ActiveRecord::Base
   belongs_to :news
   attr_accessible :image, :name, :news_id
-
   
   mount_uploader :image, ImageUploader
   
