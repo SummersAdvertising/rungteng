@@ -2,7 +2,7 @@ html{background:#000}
 body{width:1200px;margin:0 auto;color:#403F41;font:300 14px "新細明體";-webkit-text-size-adjust: none;color:#000}
 a{text-decoration:none;font:300 14px "新細明體";color:#403F41;-webkit-text-size-adjust: none;color:#000}
 #wrapper{width:100%;overflow:hidden;position:relative}
-#back-to-top{position:fixed;bottom:10px;right:10px}
+#back-to-top{position:fixed;bottom:0!important;right:10px!important;z-index:9;background:#000;padding:5px 10px;border-radius:10px 10px 0 0}
 #back-to-top a{color:#fff;font:300 16px "verdana"}
 
 #header{width:270px;float:left;background:image-url('hbg.png') repeat;box-shadow:0 0 10px #000}
@@ -28,7 +28,7 @@ a{text-decoration:none;font:300 14px "新細明體";color:#403F41;-webkit-text-s
 #social a:hover{position:relative;top:-3px}
 #info{border-top:1px solid #FFEDE1;font:300 13px "微軟正黑體";padding:100px 0 20px 0;text-align:center;
 background:image-url('logo2.png') center 20px no-repeat;line-height:1.7em}
-#info strong{font:700 16px "微軟正黑體"}
+#info strong{font:900 16px "微軟正黑體"!important}
 #info strong span{font-size:13px}
 
 #container{width:930px;float:right;background:image-url('cbg.jpg') repeat;position:relative;box-shadow: inset 3px 0 3px #aaa}
