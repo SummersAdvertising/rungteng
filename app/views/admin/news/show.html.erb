@@ -25,7 +25,11 @@ img{
 <script type="text/javascript">
 $(document).ready(function() {
   $("#update").addClass("active");
-	showContent();
+  showContent();
+
+   /* find http links in the paragraph and add <a> tag */
+  $("p:contains(http), p:contains(https)").each(function() { $(this).html($(this).html().replace(/((http|https):\/\/[^\ \n]*)/, "<a href=\"$1\">$1</a>")) });
+  
 	function showContent(){
     if($("#news_content").val())
     {

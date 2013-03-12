@@ -9,7 +9,7 @@
   <div id="content"  _height="auto">
     <h3><%= @news.name %></h3>
     
-    <input id="news_content" style="display:none;" type="text" value="<%=@news.content%>">
+    <input id="news_content" style="display:none;" type="text" value="<%=@news.content %>">
     <div id="articleContent"></div>
 
   </div>
@@ -21,7 +21,11 @@
 $(document).ready(function() {
   $("#banner ul li").eq(3).addClass("select");
 
-  showContent(initColorbox);
+  showContent();
+
+  /* find http links in the paragraph and add <a> tag */
+  $("p:contains(http), p:contains(https)").each(function() { $(this).html($(this).html().replace(/((http|https):\/\/[^\ \n]*)/, "<a href=\"$1\">$1</a>")) });
+
   function showContent(callback){
     if($("#news_content").val())
     {
@@ -44,22 +48,10 @@ $(document).ready(function() {
         }
         $("#articleContent").append(article);
       }
-
-      callback();
     }
   }
 
   function jsonReplace(string){return string.replace(/"([^"]*)"/g, "$1");}
-
-  function initColorbox(){
-    $('a.shadowbox').colorbox({
-      scalePhotos: true,
-      maxWidth: "1000px",
-      className: "normal",
-      scrolling: false,
-      returnFocus: false
-    });
-  }
   
 });
 </script>
