@@ -102,6 +102,15 @@ $(document).ready(function(){
   $( "#order_receive_date" ).datepicker();
   $( "#order_receive_date" ).change(function(){
     $(this).datepicker("option", "dateFormat", "yy-mm-dd");
+
+    //compare the date
+    if(new Date($(this).val()) <= new Date()){
+      $(this).val("");
+      $("#error").html("<p>預定收貨日期不能為過去的日期</p>").show();
+    }
+    else{
+      $("#error").hide();
+    }
   });
 
   $("#submit").click(function(event){
