@@ -327,24 +327,33 @@ $(function(){
   function showContent(){
     if($("#news_content").val())
     {
-      var obj = jQuery.parseJSON($("#news_content").val());
-      var article = "";
-      for(i=0;i<obj.article.length;i++)
+      try
       {
-        var paragraph = obj.article[i];
-
-        if(JSON.stringify(paragraph.type)=='"paragraph"')
+        var obj = jQuery.parseJSON($("#news_content").val());
+        var article = "";
+        for(i=0;i<obj.article.length;i++)
         {
-          article = "<div class='paragraphContainer ui-state-default dragItem' data-type='paragraph'><div class='edit'><a name='edit'>編輯</a><a name='delete'>刪除</a></div><p>"+jsonReplace(JSON.stringify(paragraph.content)).replace(/\\n/g, "<br />")+"</p></div>";
-        }
-        else if(JSON.stringify(paragraph.type)=='"image"')
-        {
-          article = "<div  class='paragraphContainer ui-state-default dragItem' data-type='image' data-photo_id=\"" + paragraph.id + "\"><div class='edit'><a href='/admin/news/<%=@news.id %>/deletePhoto/" + paragraph.id + "' data-method='delete' rel='nofollow' data-remote='true'>刪除</a></div><img alt=" + JSON.stringify(paragraph.id) + " src=" + JSON.stringify(paragraph.path) + " title=" + JSON.stringify(paragraph.id) + " /></div>";
-        }
+          var paragraph = obj.article[i];
 
-        $("#articleContent").append(article);
+          if(JSON.stringify(paragraph.type)=='"paragraph"')
+          {
+            article = "<div class='paragraphContainer ui-state-default dragItem' data-type='paragraph'><div class='edit'><a name='edit'>編輯</a><a name='delete'>刪除</a></div><p>"+jsonReplace(JSON.stringify(paragraph.content)).replace(/\\n/g, "<br />")+"</p></div>";
+          }
+          else if(JSON.stringify(paragraph.type)=='"image"')
+          {
+            article = "<div  class='paragraphContainer ui-state-default dragItem' data-type='image' data-photo_id=\"" + paragraph.id + "\"><div class='edit'><a href='/admin/news/<%=@news.id %>/deletePhoto/" + paragraph.id + "' data-method='delete' rel='nofollow' data-remote='true'>刪除</a></div><img alt=" + JSON.stringify(paragraph.id) + " src=" + JSON.stringify(paragraph.path) + " title=" + JSON.stringify(paragraph.id) + " /></div>";
+          }
 
-      }//end of for.
+          $("#articleContent").append(article);
+        }//end of for.}
+      }
+      catch( err )
+      {
+        $("#news_content").val("");
+        saveArticle();
+        $("#error").html("<p>文章內容錯誤, 請重新輸入</p>");
+      }
+      
     }//end of if.
   }
 

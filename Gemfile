@@ -2,13 +2,13 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
 
-# group :production, :staging do
+group :production, :staging do
   gem "mysql2"
-# end
+end
 
-# group :development, :test do
-#   gem "sqlite3"
-# end
+group :development, :test do
+  gem "sqlite3"
+end
 
 #for pagination
 gem 'kaminari'
