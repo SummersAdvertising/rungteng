@@ -24,7 +24,7 @@ $(document).ready(function() {
   showContent();
 
   /* find http links in the paragraph and add <a> tag */
-  $("p:contains(http), p:contains(https)").each(function() { $(this).html($(this).html().replace(/((http|https):\/\/[^\ \n]*)/, "<a href=\"$1\">$1</a>")) });
+  $("p:contains(http), p:contains(https)").each(function() { $(this).html($(this).html().replace(/((http|https):\/\/[^\ \n]*)/, "<a href=\"$1\" target='_blank'>$1</a>")) });
 
   function showContent(callback){
     if($("#news_content").val())
