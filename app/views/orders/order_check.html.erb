@@ -15,7 +15,7 @@
       <table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr id="total">
           <td colspan="6" align="right" valign="middle" width="85%"><h3>金額總計：</h3></td>
-          <td colspan="2" align="center" valign="middle" width="15%"><a>13250 元</a></td>
+          <td colspan="2" align="center" valign="middle" width="15%"><a></a></td>
           <input id="orderitems" size="300" type="text" name="orderitems" style="display: none;" />
           <%= f.text_field :totalprice, :autocomplete => "off", :style => "display: none;"  %>
         </tr>
@@ -78,7 +78,7 @@
           </tr>
         </table>
       </div>
-      <div id="error"></div>
+      <div id="error" style="display:none;"></div>
       <div class="article" id="next">
       <h3>付款方式</h3>
       轉帳銀行：玉山銀行-城中分行<br />
@@ -106,7 +106,6 @@ $(document).ready(function(){
 
   $("#submit").click(function(event){
     if(formValidate()){
-      console.log("true");
       $("form").submit();
     }
     
@@ -130,7 +129,12 @@ $(document).ready(function(){
       }
     });
 
-    $("#error").html(msg);
+    if(msg){
+      $("#error").html(msg).show();
+    }
+    else{
+      $("#error").hide();
+    }    
 
     return submit;
   }
