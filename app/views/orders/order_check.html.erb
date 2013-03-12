@@ -138,6 +138,15 @@ $(document).ready(function(){
       }
     });
 
+    //validate email value
+    var emailrule = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    if($("#order_order_email").val() && !$("#order_order_email").val().match(emailrule)){
+      submit = false;
+
+      msg += "請輸入正確的email<br />";
+      $("#order_order_email").val("");
+    }
+
     if(msg){
       $("#error").html(msg).show();
     }
