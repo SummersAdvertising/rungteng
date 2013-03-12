@@ -7,10 +7,12 @@
     <div id="content"  _height="auto">
     <table width="100%" border="0" cellspacing="0" cellpadding="0">
       <% @news.each do |news| %>
+      <% if(news.frontshow) %>
       <tr>
         <td width="20%" class="date"><%= news.created_at.strftime("%Y-%m-%d") %></td>
         <td width="80%"><%= link_to news.name, news %></td>
       </tr>
+      <% end %>
       <% end %>
     </table>
     <%= paginate @news, :theme => 'front' %>

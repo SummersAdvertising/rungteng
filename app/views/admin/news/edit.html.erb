@@ -37,9 +37,10 @@
     <%= form_for(@news, :url => admin_news_path(@news), :method => "put") do |f| %>
     <div style="display: none;">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "validate" %>
     <%= f.label :content %>
-    <%= f.text_field :content %>
+    <%= f.text_field :content, :class => "validate" %>
+    <%= f.text_field :frontshow, :value => 0 %>
     <input id="news_contentOrigin" type="text" value="test">
     </div>
 
@@ -48,7 +49,7 @@
     
     <% end %>
 
-    <div id='error'></div>
+    <div id='formerror'></div>
 
     <div class="buttonArea">
       <div class="button" id="btnSubmit"><a href="#"><img src="/images/save.png">儲存</a></div>
@@ -351,7 +352,7 @@ $(function(){
       {
         $("#news_content").val("");
         saveArticle();
-        $("#error").html("<p>文章內容錯誤, 請重新輸入</p>");
+        $("#formerror").html("<p>文章內容錯誤, 請重新輸入</p>");
       }
       
     }//end of if.
@@ -376,13 +377,13 @@ $(function(){
   //validate when submit
   $(form).submit(function(){
     var submit = true;
-    $("#error").html("");
-    $("#news_frontshow").val("true");
+    $("#formerror").html("");
+    $("#news_frontshow").val("1");
 
-    $(form + " input[type='text']").each(function(){
+    $(".validate").each(function(){
       if(!$(this).val()){
         submit = false;
-        $("#error").append("<p>" + $("label[for='"+$(this).attr('id')+"']").html() + "不能為空</p>");
+        $("#formerror").append("<p>" + $(this).attr("id") + "不能為空</p>");
       }
     });
 
