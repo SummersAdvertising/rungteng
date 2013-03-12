@@ -1,5 +1,5 @@
 if(<%=  @photo.errors.any? %>){
-	alert("this photo is already existed");
+	alert("這張照片已經存在");
 }
 else{
 	newImage("<%= @photo.id %>","<%= @photo.image %>");

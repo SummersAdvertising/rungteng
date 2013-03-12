@@ -28,7 +28,9 @@
       <tr>
         <th width="9%"><%= f.label :image, '圖片' %></th>
         <td colspan="7" align="left"><%= f.file_field :image %></td>
-        <td>
+      </tr>
+      <tr>
+        <td colspan="7" align="center">
           <% if(@product.image.path) %>
           <%= image_tag(@product.image_url(:thumb)) %>
           <%else%>
