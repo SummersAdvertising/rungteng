@@ -100,6 +100,8 @@
 
 				function kwickMove(){
 					kwick.unbind();
+					$('#accordion-slider li').unbind("mouseover mouseleave");
+					
 					var prevWoHs = []; // prevWoHs = previous Widths or Heights
 					var prevLoTs = []; // prevLoTs = previous Left or Tops
 

@@ -37,9 +37,10 @@
     <%= form_for(@news, :url => admin_news_path(@news), :method => "put") do |f| %>
     <div style="display: none;">
     <%= f.label :name %>
-    <%= f.text_field :name, :class => "validate" %>
+    <%= f.text_field :name %>
+    <input id="news_nameOrigin" type="text" value="test">
     <%= f.label :content %>
-    <%= f.text_field :content, :class => "validate" %>
+    <%= f.text_field :content %>
     <%= f.text_field :frontshow, :value => 0 %>
     <input id="news_contentOrigin" type="text" value="test">
     </div>
@@ -95,6 +96,7 @@ $(function(){
 
   //record the origin content
   $("#news_contentOrigin").val($("#news_content").val());
+  $("#news_nameOrigin").val($("#news_name").val());
   $("#news_title").val($("#news_name").val());
 
   //show content
@@ -370,6 +372,7 @@ $(function(){
 
   $("#btnCancel").click(function(){
     $("#news_content").val($("#news_contentOrigin").val());
+    $("#news_name").val($("#news_nameOrigin").val());
     $(form).submit();
   });
 
@@ -383,9 +386,12 @@ $(function(){
     $(".validate").each(function(){
       if(!$(this).val()){
         submit = false;
-        $("#formerror").append("<p>文章標題及內容不能為空</p>");
       }
     });
+
+    if(!submit){
+      $("#formerror").append("<p>請輸入文章標題</p>");
+    }
 
     return submit;
   });

@@ -124,15 +124,18 @@
 	duration: 1000,
  	max : 930,
  	spacing : 93
- }); 
- 
- $('#accordion-slider li').mouseover(function(){			
-		$(this).siblings().stop().animate({"opacity":".5"},250)
  });
- $('#accordion-slider li').mouseleave(function(){			
-		$(this).siblings().stop().animate({"opacity":"1"},250)
+
+ accordionOpacityChange();
+
+ function accordionOpacityChange(){
+  $('#accordion-slider li').mouseover(function(){     
+    $(this).siblings().stop().animate({"opacity":".5"},250)
  });
- 
+ $('#accordion-slider li').mouseleave(function(){     
+    $(this).siblings().stop().animate({"opacity":"1"},250)
+ });
+ } 
  
 })
 </script>

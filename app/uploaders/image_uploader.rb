@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   process :resize_to_limit => [360, nil]
 
   version :thumb, :if => :isProduct? do
-    process :resize_to_fill => [170, 125]
+    process :resize_to_fill => [218, 163]
   end
 
   def extension_white_list
