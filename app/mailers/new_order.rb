@@ -1,3 +1,4 @@
+#encoding: utf-8
 class NewOrder < ActionMailer::Base
   default from: "mail@rungteng.com"
   def send_order(order)
