@@ -58,7 +58,7 @@
         <% @orderitem = Product.find(orderitem.product_id) %>
 
         <tr>
-          <td align="center">1</td>
+          <td align="center"><%= @orderitem.ordernum %></td>
           <td align="left"><a href="/admin/products/<%= @orderitem.id %>"><%= @orderitem.name %></a></td>
           <td align="center"><%= @orderitem.weight %></td>
           <td align="center"><%= orderitem.amount%></td>

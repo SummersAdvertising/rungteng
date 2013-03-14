@@ -16,3 +16,5 @@
 
 /public/uploads
 /config/deploy
+/config/environments/development.rb
+/config/environments/test.rb
