@@ -37,6 +37,10 @@
             <td width="32%" align="left"><%= @order.order_email %></td>
             <th width="17%" align="left">指定收貨地址：</th>
             <td width="43%" align="left"><%= @order.receive_address%></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left" valign="top">備註：</th>
+            <td colspan="3" align="left"><%= simple_format(@order.note) %></td>
           </tr>        
       </table>
     </div>
@@ -64,21 +68,16 @@
         <% end %>
 
         <tr>
-          <td align="center">總計</td>
-          <td align="left"><%= @order.totalprice %></td>
-          <td align="left" colspan="2">+運費：&nbsp;<%= @order.shippingfee %></td>
-          <td align="center">$<%= @order.totalprice+@order.shippingfee %></td>
+          <td align="center"></td>
+          <td align="left" colspan="2"></td>
+          <td align="left">運費&nbsp;</td>
+          <td align="center">$<%= @order.shippingfee %></td>
         </tr>
-      </table>
-    </div>
-    <div class="main-list"  style="margin:10px 0 0 0">
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-        <tr class="main-list-title">
-          <th align="left" scope="col">備註</th>
-        </tr>
-
         <tr>
-          <td align="left"><%= simple_format(@order.note) %></td>
+          <td align="center"></td>
+          <td align="left" colspan="2"></td>
+          <td align="left">總計&nbsp;</td>
+          <td align="center">$<%= @order.totalprice+@order.shippingfee %></td>
         </tr>
       </table>
     </div>
