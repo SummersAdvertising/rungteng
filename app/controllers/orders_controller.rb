@@ -41,7 +41,7 @@ class OrdersController < ApplicationController
         end
 
         # send a order Email after save
-        OrderMailer.send_order(@order).deliver
+        NewOrder.send_order(@order).deliver
 
         format.html { redirect_to action: "order_finish" }
         format.json { render json: @order, status: :created, location: @order }

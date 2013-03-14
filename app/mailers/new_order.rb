@@ -1,10 +1,10 @@
 class NewOrder < ActionMailer::Base
-  default from: "from@example.com"
+  default from: "mail@rungteng.com"
   def send_order(order)
   	@order = order
 
-  	mail(:to => [@order.email, "kobanae@gmail.com"],
-  	     :subject => "#{@order.customername}, your order")
+  	mail(:to => [@order.order_email],
+  	     :subject => "#{@order.order_name}, your order")
   	
   end
 end
