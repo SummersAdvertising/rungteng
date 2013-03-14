@@ -10,27 +10,24 @@
     <div id="counter">
       <h3>您訂購的是：</h3>
       <table id="productList" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <!-- show the selected products -->
-      </table>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	  
-	  <tr id="freight">
-            <td align="center">運費</td>
-            <td>&nbsp;</td>
-            <td align="center">&nbsp;</td>
-            <td align="center">&nbsp;</td>
-            <td>&nbsp;</td>
-            <td align="right">NT :</td>
-            <td align="right"><a id="showShippingfee"></a></td>
-            <td align="center">元</td>
-			<%= f.text_field :shippingfee, :autocomplete => "off", :style => "display: none;"  %>
-      </tr>
-	  
-      <tr id="total">
-            <td colspan="8" align="right" valign="middle">金額總計：<a></a></td>
-			<input id="orderitems" size="300" type="text" name="orderitems" style="display: none;" />
-            <%= f.text_field :totalprice, :autocomplete => "off", :style => "display: none;"  %>
-      </tr>
+
+        <tr id="freight">
+          <td align="center">運費</td>
+          <td>&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td align="right">NT :</td>
+          <td align="right"><label id="showShippingfee"></label></td>
+          <td align="center">元</td>
+          <%= f.text_field :shippingfee, :autocomplete => "off", :style => "display: none;"  %>
+        </tr>
+
+        <tr id="total">
+          <td colspan="8" align="right" valign="middle">金額總計：<a></a></td>
+          <input id="orderitems" size="300" type="text" name="orderitems" style="display: none;" />
+          <%= f.text_field :totalprice, :autocomplete => "off", :style => "display: none;"  %>
+        </tr>
       </table>
 
       <p> - 以上價格包含稅費及運費<br />
@@ -51,7 +48,7 @@
       </tr>
     </table>
   </div>
-  
+
     <div class="article">
       <h3>訂購人資料</h3>
       <table width="50%" border="0" cellspacing="0" cellpadding="0">
@@ -213,7 +210,7 @@ $(document).ready(function(){
           var price = orderitem.amount * data.price;
           calculateTotalprice(price);
 
-          $("#productList").append('<tr><td width="25%" class="name"><span>'+data.ordernum+'</span>'+data.name+'</td><td width="2%">│</td><td width="9%" align="center">'+data.weight+'</td><td width="10%" align="center">'+orderitem.amount+'包</td><td width="2%">│</td><td width="33%" align="right">NT :</td><td width="15%" align="right">'+price+' </td><td width="4%" align="center">元</td></tr>');
+          $("#productList").prepend('<tr><td width="25%" class="name"><span>'+data.ordernum+'</span>'+data.name+'</td><td width="2%">│</td><td width="9%" align="center">'+data.weight+'</td><td width="10%" align="center">'+orderitem.amount+'包</td><td width="2%">│</td><td width="33%" align="right">NT :</td><td width="15%" align="right">'+price+' </td><td width="4%" align="center">元</td></tr>');
 
           if(data.producttype == "box"){
             isListIncludeBox = true;
@@ -236,7 +233,7 @@ $(document).ready(function(){
   function calculateShippingfee(){
     var shippingfee = (totalprice>2000 || isListIncludeBox)? 0:200;
     $("#order_shippingfee").val(shippingfee);
-    $("#showShippingfee").html(shippingfee + " 元");
+    $("#showShippingfee").html(shippingfee);
 
     var orderprice = totalprice + shippingfee;
     $("#order_totalprice").val(totalprice);
