@@ -17,7 +17,7 @@
           </tr>
           <tr>
             <th width="8%" align="left" valign="top">傳真：</th>
-            <td width="32%" align="left">(02)3456-7890</td>
+            <td width="32%" align="left"><%= @order.order_fax %></td>
             <th width="17%" align="left" valign="top">收貨人電話：</th>
             <td width="43%" align="left"><%= @order.receive_phone %></td>
           </tr>
@@ -94,7 +94,7 @@
             <th width="12%" align="left">處理狀態：</th>
             <td width="88%" align="left">
                <%= form_for(@order, :url => admin_order_path(@order), :method => "put") do |f| %>
-               <%= f.check_box :isAdminCheck, :style => "width:15px!important" %>
+               <%= f.check_box :isAdminCheck, :style => "width:15px!important" %>已處理
                <% end %>
               </td>
           </tr>
