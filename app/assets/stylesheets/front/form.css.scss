@@ -18,7 +18,7 @@ h2{background:image-url('od-h2.jpg') 0 0 no-repeat #221E1F;height:85px;text-inde
 #counter tr:nth-child(2n-1){background:#A08554;color:#fff}
 #counter span{background:#E60012;color:#fff;font:300 11px verdana;width:21px;display:block;text-align:center;border-radius:50%;float:left;margin:10px 5px 0 5px;padding:4px 0}
 #counter a{background:#fff;border:1px solid #555;border-radius:5px;padding:7px 15px;font:300 17px "微軟正黑體"}
-#total{background:none!important;color:#000!important}
+#total{background:none!important;color:#CBA65E!important;font:900 28px "新細明體";text-shadow:0 1px 0 #fff}
 #counter p{border-top:1px solid #7E7B78;border-bottom:1px solid #7E7B78;font:300 13px "微軟正黑體";padding:10px 5px;margin:40px 0 0 0}
 
 .article{padding:40px 0;border-bottom:1px solid #7E7B78}
@@ -27,11 +27,12 @@ h2{background:image-url('od-h2.jpg') 0 0 no-repeat #221E1F;height:85px;text-inde
 .article tr{line-height:2.5em}
 .article .checkbox{width:16px!important}
 .article strong{color:#E60012}
+.article textarea{width:100%;min-height:150px}
 
 .article #month,.article #day{width:20px!important}
 .article p{float:left}
 
-#next{overflow:hidden}
+#next{overflow:hidden;line-height:2em}
 #next p{float:left}
 #next a{padding:3px 50px 3px 15px;background:image-url('check.png') 90px center no-repeat #E60012;color:#fff;font:300 30px "微軟正黑體";border-radius:5px;box-shadow:0 3px 0 #90000B;text-shadow:0 -1px 0 #90000B;float:right}
 #next a:active{box-shadow:none;position:relative;top:3px}
