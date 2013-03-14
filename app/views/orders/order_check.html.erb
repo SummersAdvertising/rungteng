@@ -35,7 +35,7 @@
       <h3>備註</h3>
       <table width="80%" border="0" cellspacing="0" cellpadding="0">
         <tr>
-          <td colspan="2"><%= f.text_area :order_name, :autocomplete => "off" %></td>
+          <td colspan="2"><%= f.text_area :order_note, :autocomplete => "off" %></td>
         </tr>
       </table>
     </div>
@@ -227,7 +227,7 @@ $(document).ready(function(){
     $("#showShippingfee").html(shippingfee + " 元");
 
     var orderprice = totalprice + shippingfee;
-    $("#order_totalprice").val(orderprice);
+    $("#order_totalprice").val(totalprice);
     $("#total a").html(orderprice + " 元");
   }
 

@@ -65,10 +65,20 @@
 
         <tr>
           <td align="center">總計</td>
-          <td align="left">&nbsp;</td>
-          <td align="center">&nbsp;</td>
-          <td align="center">&nbsp;</td>
-          <td align="center">$<%= @order.totalprice %></td>
+          <td align="left"><%= @order.totalprice %></td>
+          <td align="left" colspan="2">+運費：&nbsp;<%= @order.shippingfee %></td>
+          <td align="center">$<%= @order.totalprice+@order.shippingfee %></td>
+        </tr>
+      </table>
+    </div>
+    <div class="main-list"  style="margin:10px 0 0 0">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr class="main-list-title">
+          <th align="left" scope="col">備註</th>
+        </tr>
+
+        <tr>
+          <td align="left"><%= simple_format(@order.note) %></td>
         </tr>
       </table>
     </div>
