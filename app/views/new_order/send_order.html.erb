@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <h1>
+    <%= @order.order_name %>的訂單內容</h1>
+  <div>
+    <% @order.orderitems.each do |orderitem| %>
+    <p>
+      <%= Product.find(orderitem.product_id).name%>: <%= orderitem.amount%>個
+    </p>
+    <% end %>
+    <p>
+      運費: <%= @order.shippingfee %>
+      總金額: <%= @order.totalprice+@order.shippingfee %>
+    </p>
+  </div>
+</body>
+</html>
