@@ -1,5 +1,5 @@
 class NewsController < ApplicationController
-
+  layout false
   def index
     @news = News.order('created_at DESC').page(params[:page]).per(17)
 

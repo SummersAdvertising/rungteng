@@ -1,4 +1,5 @@
 class OrdersController < ApplicationController
+  layout false
   def index
     @items = Product.where("producttype = ?", "item").order('ordernum ASC, updated_at DESC, created_at DESC')
     @boxs = Product.where("producttype = ?", "box").order('ordernum ASC, updated_at DESC, created_at DESC')

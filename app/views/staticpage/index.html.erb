@@ -1,3 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" style="background: #000;">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>榮騰農產</title>
+  <%= stylesheet_link_tag "application", :media => "all" %>
+  <%= stylesheet_link_tag "index", :media => "all" %>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+<script>
+$(window).load(function () {	
+	$('#f1').fadeIn(3000)
+	$('#f2').delay(1000).fadeIn(3000)
+	$('#f3').delay(2000).fadeIn(3000)	
+	$('#t1').delay(3000).fadeIn(1500,function(){
+		$('#t1').fadeOut(1500)
+		$('#t2').fadeIn(1500)
+	});
+	$('#logo').delay(5000).fadeIn(3000,function(){
+		$(location).attr('href','/home')
+	});	
+})
+</script>
+
+<script>
+var images = new Array()
+	function preload() {
+		for (i = 0; i < preload.arguments.length; i++) {
+			images[i] = new Image()
+			images[i].src = preload.arguments[i]
+		}
+	}
+	preload(
+		"/images/f1.png",
+		"/images/f2.png",
+		"/images/f3.png"	
+)
+</script>
+<script>
+  jQuery(document).ready(function(){
+	$("#skip").click(function(event){
+        event.preventDefault();
+        linkLocation = this.href;
+        $("body").fadeOut(500, redirectPage);
+    }); 	
+    function redirectPage() {
+        window.location = linkLocation;
+    }
+  });
+</script>
+</head>
+
+<body _height="auto">
 <div id="vert">
 <div id="intro">
   <div class="flower" id="f1"><img src="/images/f1.png"/></div>
@@ -9,3 +62,5 @@
   <div class="text" id="t2"> </div>
 </div><!--intro-->
 </div>
+</body>
+</html>

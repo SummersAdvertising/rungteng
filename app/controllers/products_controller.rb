@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  layout false
   def show
     @product = Product.find(params[:id])
 

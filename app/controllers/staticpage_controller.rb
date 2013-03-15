@@ -1,5 +1,5 @@
 class StaticpageController < ApplicationController
-	layout "index", only: [:index]
+  layout false
 	def index
 	end
 end
