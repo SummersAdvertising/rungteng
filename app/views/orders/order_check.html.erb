@@ -10,21 +10,44 @@
     <div id="counter">
       <h3>您訂購的是：</h3>
       <table id="productList" width="100%" border="0" cellspacing="0" cellpadding="0">
-        <!-- show the selected products -->
-      </table>
-      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+        <tr id="freight">
+          <td align="center">運費</td>
+          <td>&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td align="right">NT :</td>
+          <td align="right"><label id="showShippingfee"></label></td>
+          <td align="center">元</td>
+          <%= f.text_field :shippingfee, :autocomplete => "off", :style => "display: none;"  %>
+        </tr>
+
         <tr id="total">
-          <td colspan="6" align="right" valign="middle" width="85%"><h3>金額總計：</h3></td>
-          <td colspan="2" align="center" valign="middle" width="15%"><a></a></td>
+          <td colspan="8" align="right" valign="middle">金額總計：<a></a></td>
           <input id="orderitems" size="300" type="text" name="orderitems" style="display: none;" />
           <%= f.text_field :totalprice, :autocomplete => "off", :style => "display: none;"  %>
         </tr>
       </table>
 
-      <p> ˙以上價格包含稅費及運費<br />
-          ˙運送說明：我們將交付冷凍物流公司，全程-18℃保存，將鮮甜味美的肉品為您宅配到府。 </p>
+      <p> - 以上價格包含稅費及運費<br />
+          - 運送說明：我們將交付冷凍物流公司，全程-18℃保存，將鮮甜味美的肉品為您宅配到府。<br />
+          - 運費說明：凡購物滿2,000元以上可享免運費之優惠(單一送貨地址)，未達免運金額將酌收200元冷凍運送費，謝謝。<br />
+          - 送貨日期：星期一至星期四下單將於隔天馬上為您出貨，星期五訂貨將於下個星期一出貨，如有特殊需求，<br />
+          　　　　　　可填寫於備註欄，榮騰將竭力為您服務。 </p>
     </div>
     <!--counter-->
+
+	<div class="article">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td>備註欄：</td>
+      </tr>
+      <tr>
+        <td><%= f.text_area :note, :autocomplete => "off" %></td>
+      </tr>
+    </table>
+  </div>
 
     <div class="article">
       <h3>訂購人資料</h3>
@@ -166,11 +189,19 @@ $(document).ready(function(){
   function showOrderitems(orderitems){
     orderitems = JSON.parse(orderitems);
     for(var item in orderitems){
-      getItemData(orderitems[item]);
+      var isLastItem = false;
+
+      if(item == orderitems.length-1){
+        isLastItem = true;
+      }
+
+      getItemData(orderitems[item], isLastItem);
     }
   }
 
-  function getItemData(orderitem){
+  var isListIncludeBox = false;
+
+  function getItemData(orderitem, isLastItem){
     $.ajax({
         type: "GET",
         dataType: "json",
@@ -179,7 +210,15 @@ $(document).ready(function(){
           var price = orderitem.amount * data.price;
           calculateTotalprice(price);
 
-          $("#productList").append('<tr><td width="25%" class="name"><span>'+data.ordernum+'</span>'+data.name+'</td><td width="2%">│</td><td width="9%" align="center">'+data.weight+'</td><td width="10%" align="center">'+orderitem.amount+'包</td><td width="2%">│</td><td width="33%" align="right">NT :</td><td width="15%" align="right">'+price+' </td><td width="4%" align="center">元</td></tr>');
+          $("#productList").prepend('<tr><td width="25%" class="name"><span>'+data.ordernum+'</span>'+data.name+'</td><td width="2%">│</td><td width="9%" align="center">'+data.weight+'</td><td width="10%" align="center">'+orderitem.amount+'包</td><td width="2%">│</td><td width="33%" align="right">NT :</td><td width="15%" align="right">'+price+' </td><td width="4%" align="center">元</td></tr>');
+
+          if(data.producttype == "box"){
+            isListIncludeBox = true;
+          }
+
+          if(isLastItem){
+            calculateShippingfee();
+          }
         }
     }); 
   }
@@ -189,6 +228,16 @@ $(document).ready(function(){
     totalprice += price;
     $("#order_totalprice").val(totalprice);
     $("#total a").html(totalprice + " 元");
+  }
+
+  function calculateShippingfee(){
+    var shippingfee = (totalprice>2000 || isListIncludeBox)? 0:200;
+    $("#order_shippingfee").val(shippingfee);
+    $("#showShippingfee").html(shippingfee);
+
+    var orderprice = totalprice + shippingfee;
+    $("#order_totalprice").val(totalprice);
+    $("#total a").html(orderprice + " 元");
   }
 
 });

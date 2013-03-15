@@ -30,6 +30,16 @@ Rungteng::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => 'localhost',
+    :user_name            => 'kobanae@summers.com.tw',
+    :password             => '1234hana',
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 

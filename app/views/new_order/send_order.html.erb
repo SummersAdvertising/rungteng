@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+</head>
+<body>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td valign="top" class="title" height="22" width="103"><%= @order.created_at.to_date %></td>
+          <td width="543" valign="middle" class="text"><%= @order.order_name %></td>
+        </tr>
+  </table>
+  <table width="100%" border="0" cellspacing="5" cellpadding="0">
+          <tr>
+            <th width="8%" align="left" valign="top">電話：</th>
+            <td width="32%" align="left"><%= @order.order_phone %></td>
+            <th width="17%" align="left" valign="top">收貨人姓名：</th>
+            <td width="43%" align="left"><%= @order.receive_name %></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left" valign="top">傳真：</th>
+            <td width="32%" align="left"><%= @order.order_fax %></td>
+            <th width="17%" align="left" valign="top">收貨人電話：</th>
+            <td width="43%" align="left"><%= @order.receive_phone %></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left" valign="top">統編：</th>
+            <td width="32%" align="left"><%= @order.order_companytaxID %></td>
+            <th width="17%" align="left" valign="top">指定收貨時間：</th>
+            <td width="43%" align="left"><%= @order.receive_date %>&nbsp;
+              <% if (@order.receive_time=="morning") %>
+              早上
+              <% elsif (@order.receive_time=="afternoon") %>
+              下午
+              <% end %></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left" valign="top">郵件：</th>
+            <td width="32%" align="left"><%= @order.order_email %></td>
+            <th width="17%" align="left" valign="top">指定收貨地址：</th>
+            <td width="43%" align="left"><%= @order.receive_address%></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left" valign="top">備註：</th>
+            <td colspan="3" align="left"><%= simple_format(@order.note) %></td>
+          </tr>
+      </table>
+  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr class="main-list-title">
+          <th width="8%" align="center" scope="col">編號</th>
+          <th width="63%" align="left" scope="col">產品名稱</th>
+          <th width="9%" align="center" scope="col">重量</th>
+          <th width="9%" align="center" scope="col">數量</th>
+          <th width="9%" align="center" scope="col">小計</th>
+        </tr>
+
+        <% @order.orderitems.each do |orderitem| %>
+        <% @orderitem = Product.find(orderitem.product_id) %>
+
+        <tr>
+          <td align="center"><%= @orderitem.ordernum %></td>
+          <td align="left"><%= @orderitem.name %></td>
+          <td align="center"><%= @orderitem.weight %></td>
+          <td align="center"><%= orderitem.amount%></td>
+          <td align="center">$ <%= @orderitem.price * orderitem.amount %>
+          </td>
+        </tr>
+        <% end %>
+
+    <tr>
+          <td align="center">&nbsp;</td>
+          <td align="left">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">運費</td>
+          <td align="center">$<%= @order.shippingfee %></td>
+        </tr>
+
+        <tr>
+          <td align="center">&nbsp;</td>
+          <td align="left">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">總計</td>
+          <td align="center">$<%= @order.totalprice+@order.shippingfee %></td>
+        </tr>
+
+      </table>
+</body>
+</html>

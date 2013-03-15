@@ -24,6 +24,8 @@ cursor:image-url('hand.png'),image-url('hand.cur'),pointer}
 #f2 .content{background:image-url('f2-2.jpg') center center no-repeat}
 #f3 .content{background:image-url('f3-2.jpg') 50% center no-repeat}
 
-.recipe{background:#221E1F;background:rgba(0,0,0,.75);position:fixed;bottom:45px;margin-left:310px;color:#fff;padding:20px;font:300 18px "微軟正黑體";line-height:1.7em;width:535px}
-.recipe h4{font:700 40px "新細明體";border-top:1px solid #B2955F;padding:20px 0}
+.recipe{background:#221E1F;background:rgba(0,0,0,.75);position:fixed;bottom:45px;margin-left:310px;color:#fff;padding:20px;font:300 15px "微軟正黑體";line-height:1.7em;width:535px}
+.recipe h4{font:700 28px "新細明體";border-top:1px solid #B2955F;padding:20px 0}
 .recipe table{border-bottom:1px solid #B2955F}
+
+#f1 .recipe{width:410px;margin-left:435px}

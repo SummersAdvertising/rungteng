@@ -10,21 +10,21 @@
     <div class="main-text">
       <table width="100%" border="0" cellspacing="5" cellpadding="0">        
           <tr>
-            <th width="8%" align="left">電話：</th>
+            <th width="8%" align="left" valign="top">電話：</th>
             <td width="32%" align="left"><%= @order.order_phone %></td>
-            <th width="17%" align="left">收貨人姓名：</th>
+            <th width="17%" align="left" valign="top">收貨人姓名：</th>
             <td width="43%" align="left"><%= @order.receive_name %></td>
           </tr>
           <tr>
-            <th width="8%" align="left">傳真：</th>
-            <td width="32%" align="left">(02)3456-7890</td>
-            <th width="17%" align="left">收貨人電話：</th>
+            <th width="8%" align="left" valign="top">傳真：</th>
+            <td width="32%" align="left"><%= @order.order_fax %></td>
+            <th width="17%" align="left" valign="top">收貨人電話：</th>
             <td width="43%" align="left"><%= @order.receive_phone %></td>
           </tr>
           <tr>
-            <th width="8%" align="left">統編：</th>
+            <th width="8%" align="left" valign="top">統編：</th>
             <td width="32%" align="left"><%= @order.order_companytaxID %></td>
-            <th width="17%" align="left">指定收貨時間：</th>
+            <th width="17%" align="left" valign="top">指定收貨時間：</th>
             <td width="43%" align="left"><%= @order.receive_date %>&nbsp;
               <% if (@order.receive_time=="morning") %>
               早上
@@ -33,10 +33,14 @@
               <% end %></td>
           </tr>
           <tr>
-            <th width="8%" align="left">郵件：</th>
+            <th width="8%" align="left" valign="top">郵件：</th>
             <td width="32%" align="left"><%= @order.order_email %></td>
-            <th width="17%" align="left">指定收貨地址：</th>
+            <th width="17%" align="left" valign="top">指定收貨地址：</th>
             <td width="43%" align="left"><%= @order.receive_address%></td>
+          </tr>
+          <tr>
+            <th width="8%" align="left" valign="top">備註：</th>
+            <td colspan="3" align="left"><%= simple_format(@order.note) %></td>
           </tr>        
       </table>
     </div>
@@ -54,7 +58,7 @@
         <% @orderitem = Product.find(orderitem.product_id) %>
 
         <tr>
-          <td align="center">1</td>
+          <td align="center"><%= @orderitem.ordernum %></td>
           <td align="left"><a href="/admin/products/<%= @orderitem.id %>"><%= @orderitem.name %></a></td>
           <td align="center"><%= @orderitem.weight %></td>
           <td align="center"><%= orderitem.amount%></td>
@@ -63,13 +67,22 @@
         </tr>
         <% end %>
 
-        <tr>
-          <td align="center">總計</td>
+		<tr>
+          <td align="center">&nbsp;</td>
           <td align="left">&nbsp;</td>
           <td align="center">&nbsp;</td>
-          <td align="center">&nbsp;</td>
-          <td align="center">$<%= @order.totalprice %></td>
+          <td align="center">運費</td>
+          <td align="center">$<%= @order.shippingfee %></td>
         </tr>
+		
+        <tr>
+          <td align="center">&nbsp;</td>
+          <td align="left">&nbsp;</td>
+          <td align="center">&nbsp;</td>
+          <td align="center">總計</td>
+          <td align="center">$<%= @order.totalprice+@order.shippingfee %></td>
+        </tr>
+        
       </table>
     </div>
     <div class="button" style="margin:10px 0">
@@ -81,7 +94,7 @@
             <th width="12%" align="left">處理狀態：</th>
             <td width="88%" align="left">
                <%= form_for(@order, :url => admin_order_path(@order), :method => "put") do |f| %>
-               <%= f.check_box :isAdminCheck, :style => "width:15px!important" %>
+               <%= f.check_box :isAdminCheck, :style => "width:15px!important" %>已處理
                <% end %>
               </td>
           </tr>

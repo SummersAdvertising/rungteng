@@ -30,3 +30,7 @@ capybara-*.html
 **.orig
 rerun.txt
 pickle-email-*.html
+
+/config/deploy
+/config/environments/development.rb
+/config/environments/test.rb
