@@ -138,9 +138,9 @@ $(document).ready(function(){
 
   $("#submit").click(function(event){
     if(formValidate()){
-      $("#submit").unbind();
       $("form").submit();
-
+      $("#submit").hide();
+      $("#error").html("<p>訂單處理中, 請稍候</p>").show();
     }
     
     event.preventDefault();
