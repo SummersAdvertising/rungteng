@@ -138,7 +138,9 @@ $(document).ready(function(){
 
   $("#submit").click(function(event){
     if(formValidate()){
+      $("#submit").unbind();
       $("form").submit();
+
     }
     
     event.preventDefault();

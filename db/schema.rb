@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130313110201) do
+ActiveRecord::Schema.define(:version => 20130314104113) do
 
   create_table "admins", :force => true do |t|
     t.string   "username"
@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(:version => 20130313110201) do
     t.integer  "totalprice"
     t.string   "order_name"
     t.string   "order_phone"
-    t.integer  "order_companytaxID"
+    t.string   "order_companytaxID"
     t.string   "order_email"
     t.string   "receive_name"
     t.string   "receive_phone"
