@@ -17,4 +17,5 @@
 //= require anchor-art
 //= require auto-full-height.min
 //= require jquery.kwicks-1.5.1
+//= require json2.js
 //= require_tree .
