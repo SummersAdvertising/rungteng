@@ -355,7 +355,7 @@ if (typeof JSON !== 'object') {
 
 // If the JSON object does not yet have a stringify method, give it one.
 // or if browser is IE
-
+    var sAgent = navigator.userAgent.toLowerCase();
     if (typeof JSON.stringify !== 'function' || (sAgent.indexOf("msie")!=-1)) {
         console.log("isIE");
         JSON.stringify = function (value, replacer, space) {
