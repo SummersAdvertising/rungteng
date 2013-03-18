@@ -357,7 +357,6 @@ if (typeof JSON !== 'object') {
 // or if browser is IE
     var sAgent = navigator.userAgent.toLowerCase();
     if (typeof JSON.stringify !== 'function' || (sAgent.indexOf("msie")!=-1)) {
-        console.log("isIE");
         JSON.stringify = function (value, replacer, space) {
 
 // The stringify method takes a value and an optional replacer, and an optional
@@ -404,7 +403,7 @@ if (typeof JSON !== 'object') {
 
 // If the JSON object does not yet have a parse method, give it one.
 
-    if (typeof JSON.parse !== 'function') {
+    if (typeof JSON.parse !== 'function' || (sAgent.indexOf("msie")!=-1)) {
         JSON.parse = function (text, reviver) {
 
 // The parse method takes a text and an optional reviver function, and returns
