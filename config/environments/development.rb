@@ -22,8 +22,8 @@ Rungteng::Application.configure do
     :address              => "smtp.gmail.com",
     :port                 => 587,
     :domain               => 'localhost',
-    :user_name            => 'kobanae@summers.com.tw',
-    :password             => '1234hana',
+    :user_name            => 'adword@summers.com.tw',
+    :password             => '92179209',
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }
