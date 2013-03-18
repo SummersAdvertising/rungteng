@@ -354,8 +354,10 @@ if (typeof JSON !== 'object') {
     }
 
 // If the JSON object does not yet have a stringify method, give it one.
+// or if browser is IE
 
-    if (typeof JSON.stringify !== 'function') {
+    if (typeof JSON.stringify !== 'function' || (sAgent.indexOf("msie")!=-1)) {
+        console.log("isIE");
         JSON.stringify = function (value, replacer, space) {
 
 // The stringify method takes a value and an optional replacer, and an optional
