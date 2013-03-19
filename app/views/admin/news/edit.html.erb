@@ -234,6 +234,7 @@ $(function(){
   /* paragraphs sortable */
   $( ".sortable" ).sortable({
     placeholder: "ui-state-highlight",
+    disable: true,
     stop: function( event, ui ) {saveArticle();}
   });
 
@@ -241,7 +242,7 @@ $(function(){
   bindEdit();
   function bindEdit(){
     /* edit or delete the paragraphs */
-  $("div.edit a[name=edit]").click(function(){
+  $("div.edit a[name=edit]").click(function(event){
     if(!editingFlag){
       editingFlag = true;
       $(".buttonArea").hide();
@@ -250,7 +251,8 @@ $(function(){
       $(this).parent().parent().append("<div id='editDiv'><textarea id='editedContent' rows='4' cols='50'></textarea><br /><input type='button' id='editFinish' value='完成修改'/> <input type='button' id='editCancel' value='取消'/></div>");
 
       //avoid content in textbox can't not be editted due to the using of jquery sortable
-      $( "#editedContent" ).disableSelection();
+      //$( "#editedContent" ).disableSelection();
+      event.stopImmediatePropagation();
 
       $("#editedContent").html(br2nl($(paragraph).html()));
       $(paragraph).hide();
