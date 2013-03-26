@@ -36,7 +36,6 @@ Rungteng::Application.configure do
     :port                 => 587,
     :user_name            => 'adword@summers.com.tw',
     :password             => '92179209',
-    :password             => '1234hana',
     :authentication       => 'plain',
     :enable_starttls_auto => true
   }
