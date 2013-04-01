@@ -33,7 +33,7 @@ $(document).ready(function() {
 	function showContent(){
     if($("#news_content").val())
     {
-      var obj = jQuery.parseJSON($("#news_content").val());
+      var obj = JSON.parse($("#news_content").val());
       var article = "";
       for(i=0;i<obj.article.length;i++)
       {
