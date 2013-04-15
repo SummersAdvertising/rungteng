@@ -13,6 +13,9 @@ class OrdersController < ApplicationController
 
   def order_check
     @order = Order.new
+    
+    
+    
     if(params[:orderitems])
       @orderitems = ActiveSupport::JSON.decode("["+params[:orderitems]+"]")
     else
