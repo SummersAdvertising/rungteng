@@ -13,9 +13,7 @@ class OrdersController < ApplicationController
 
   def order_check
     @order = Order.new
-    
-    
-    
+
     if(params[:orderitems])
       @orderitems = ActiveSupport::JSON.decode("["+params[:orderitems]+"]")
     else
@@ -25,11 +23,46 @@ class OrdersController < ApplicationController
     end
   end
 
+  def calculate
+    @orderitems = params[:orderitems]
+    @orderinfo = Array.new
+    @orderHasBox = false
+    @ordersum = 0
+
+    JSON.parse(@orderitems).each do |item|
+      @item = Product.find(item["id"])
+      @sum = @item.price * Integer(item["amount"])
+
+      if(@item.producttype == "box")
+        @orderHasBox = true
+      end
+
+      @ordersum = @ordersum + @sum
+
+      @orderinfo.push({
+        :itemid => @item.id,
+        :name => @item.name,
+        :weight => @item.weight,
+        :ordernum => @item.ordernum,
+        :amount => item["amount"],
+        :sum => @sum
+        })
+    end
+
+    @shippingfee = ((@ordersum  > 2000) || @orderHasBox)? 0:200
+    @order = { iteminfo: @orderinfo.to_json,
+               shippingfee: @shippingfee,
+               ordernum: @ordersum
+             }.to_json
+
+    return render :text => @order
+  end
+
   def order_finish
   end
 
   def create
-    products = Product.order('addDate DESC, updated_at DESC, created_at DESC').all
+    #products = Product.order('addDate DESC, updated_at DESC, created_at DESC').all
     @order = Order.new(params[:order])
     @orderitems = ActiveSupport::JSON.decode(params[:orderitems])
 

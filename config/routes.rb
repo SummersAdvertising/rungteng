@@ -9,6 +9,7 @@ Rungteng::Application.routes.draw do
 
   resources :news, :only => [:index, :show]
   resources :orders, :only => [:index, :create]
+  match '/orders/calculate' => 'orders#calculate', :via => :post
   match '/order_check' => 'orders#order_check'
   match '/order_finish' => 'orders#order_finish'
 
