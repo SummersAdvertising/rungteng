@@ -73,8 +73,8 @@
   <div id="content"  _height="auto">
     <div id="counter">
       <h3>您訂購的是：</h3>
+      <img id="loading" src="/images/loading.png">
       <table id="productList" width="100%" border="0" cellspacing="0" cellpadding="0">
-
         <tr id="freight">
           <td align="center">運費</td>
           <td>&nbsp;</td>
@@ -269,6 +269,9 @@ $(document).ready(function(){
         '<td width="15%" align="right">'+item.sum+' </td>'+
         '<td width="4%" align="center">元</td></tr>');
       });
+
+      $("#loading").css("display", "none");
+
 
       $("#order_totalprice").val(data.ordernum);
       $("#order_shippingfee").val(data.shippingfee);

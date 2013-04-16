@@ -213,15 +213,15 @@
     var orderlist = [];
 
     $("input[name='amount']").each(function(){
-      if($(this).val() && parseInt($(this).val())>0){
+      var isValue = /^[0-9]*[1-9][0-9]*$/.exec($(this).val()); //測試是否為正整數
+      if(isValue){
         var orderitem = new Object();
         orderitem.id = String($(this).data("item"));
         orderitem.amount = $(this).val();
 
         orderlist.push(JSON.stringify(orderitem));
       }
-      else if(parseInt($(this).val())<0){
-        alert("訂購數量錯誤");
+      else{
         $(this).val("");
       }
     });
