@@ -255,7 +255,6 @@ $(document).ready(function(){
     data: {orderitems : orderitems},
     url: "/orders/calculate",
     success: function(data){
-      console.log(data);
       var orderitems = JSON.parse(data.iteminfo);
       
       $.each(orderitems, function(index, item) {
