@@ -89,7 +89,7 @@
 
         <tr id="total">
           <td colspan="8" align="right" valign="middle">金額總計：<a></a></td>
-          <input id="orderitems" size="300" type="text" name="orderitems" style="display: none;" />
+          <input id="orderitems" size="300" type="text" name="orderitems" />
           <%= f.text_field :totalprice, :autocomplete => "off", :style => "display: none;"  %>
         </tr>
       </table>
@@ -246,8 +246,9 @@ $(document).ready(function(){
   }
 
   /* show the orderitems and calculate the total price */
-  $("#orderitems").val(orderitems);
+  
   var orderitems = '<%= @orderitems.to_json.html_safe %>';
+  $("#orderitems").val(orderitems);
   $.ajax({
     type: "post",
     dataType: "json",
