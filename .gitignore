@@ -13,7 +13,7 @@
 # Ignore all logfiles and tempfiles.
 /tmp
 
-/public/uploads
+/public/uploads/*
 
 *.rbc
 *.sassc
