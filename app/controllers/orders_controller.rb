@@ -62,12 +62,11 @@ class OrdersController < ApplicationController
   end
 
   def create
-    #products = Product.order('addDate DESC, updated_at DESC, created_at DESC').all
     @order = Order.new(params[:order])
     @orderitems = ActiveSupport::JSON.decode(params[:orderitems])
 
     respond_to do |format|
-      if @order.save
+      if (@order.save && !@orderitems.blank?)
         @orderitems.each do|orderitem|
           @orderitem = @order.orderitems.new()
           @orderitem.product_id = orderitem['id']

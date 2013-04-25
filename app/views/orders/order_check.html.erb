@@ -185,12 +185,14 @@
 $(document).ready(function(){
   $("#banner ul li").eq(5).addClass("select");
 
-  
-  <% @errormsg = "" %>
+  <% @errors = "" %>
   <% @order.errors.full_messages.each do |msg| %>
-  <% @errormsg+=msg%>;
+  <% @errors +=  msg + "<br><br>" %>
   <% end %>
-  console.log("<%= @errormsg %>");
+
+  if("<%= @errors %>"){
+    $("#error").html("<%= @errors %>".replace(/&lt;br&gt;/gi, "<br>")).show();
+  }
 
   /* add datepicker */
   $( "#order_receive_date" ).datepicker();
@@ -208,86 +210,53 @@ $(document).ready(function(){
   });
 
   $("#submit").click(function(event){
-    if(formValidate()){
-      $("form").submit();
-      $("#submit").hide();
-      $("#error").html("<p>訂單處理中, 請稍候</p>").show();
-    }
-    
+    $("form").submit();
+    $("#submit").hide();
+    $("#error").html("<p>訂單處理中, 請稍候</p>").show();
     event.preventDefault();
   });
 
   $("input[type=radio]").change(function(){
     $("#order_receive_time").val($("input[type=radio]:checked").val());
-
-  });
-
-  /* validate the form before send */
-  function formValidate(){
-    var submit = true;
-    var msg = "";
-
-    $(".validate").each(function(){
-      if(!$(this).val()){
-        submit = false;
-        msg += $(this).data("validate")+"不能為空<br />";
-      }
-    });
-
-    //validate email value
-    var emailrule = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-    if($("#order_order_email").val() && !$("#order_order_email").val().match(emailrule)){
-      submit = false;
-
-      msg += "請輸入正確的email<br />";
-      $("#order_order_email").val("");
-    }
-
-    if(msg){
-      $("#error").html(msg).show();
-    }
-    else{
-      $("#error").hide();
-    }
-    return true;
-    return submit;
-  }
-
-  /* show the orderitems and calculate the total price */
+  });  
   
   var orderitems = '<%= @orderitems.to_json.html_safe %>';
-  $("#orderitems").val(orderitems);
-  $.ajax({
-    type: "post",
-    dataType: "json",
-    data: {orderitems : orderitems},
-    url: "/orders/calculate",
-    success: function(data){
-      var orderitems = JSON.parse(data.iteminfo);
-      
-      $.each(orderitems, function(index, item) {
-        $("#freight").before('<tr>'+
-        '<td width="25%" class="name">'+
-        '<span>'+item.ordernum+'</span>'+item.name+'</td>'+
-        '<td width="2%">│</td>'+
-        '<td width="9%" align="center">'+item.weight+'</td>'+
-        '<td width="10%" align="center">'+item.amount+'包</td>'+
-        '<td width="2%">│</td>'+
-        '<td width="33%" align="right">NT :</td>'+
-        '<td width="15%" align="right">'+item.sum+' </td>'+
-        '<td width="4%" align="center">元</td></tr>');
-      });
+  if(orderitems){
+    /* show the orderitems and calculate the total price */
+    $("#orderitems").val(orderitems);
+    $.ajax({
+      type: "post",
+      dataType: "json",
+      data: {orderitems : orderitems},
+      url: "/orders/calculate",
+      success: function(data){
+        var orderitems = JSON.parse(data.iteminfo);
 
-      $("#loading").css("display", "none");
+        $.each(orderitems, function(index, item) {
+          $("#freight").before('<tr>'+
+            '<td width="25%" class="name">'+
+            '<span>'+item.ordernum+'</span>'+item.name+'</td>'+
+            '<td width="2%">│</td>'+
+            '<td width="9%" align="center">'+item.weight+'</td>'+
+            '<td width="10%" align="center">'+item.amount+'包</td>'+
+            '<td width="2%">│</td>'+
+            '<td width="33%" align="right">NT :</td>'+
+            '<td width="15%" align="right">'+item.sum+' </td>'+
+            '<td width="4%" align="center">元</td></tr>');
+        });
 
+        $("#loading").css("display", "none");
 
-      //$("#order_totalprice").val(data.ordernum);
-      $("#order_shippingfee").val(data.shippingfee);
-      $("#showShippingfee").html(data.shippingfee);
-      $("#total a").html(data.ordernum+data.shippingfee + " 元");
-    }
-  });
-
+        $("#order_totalprice").val(data.ordernum);
+        $("#order_shippingfee").val(data.shippingfee);
+        $("#showShippingfee").html(data.shippingfee);
+        $("#total a").html(data.ordernum+data.shippingfee + " 元");
+      }
+    });
+  }
+  else{
+    window.location = "/orders";
+  }
 
 });
 </script>
