@@ -85,7 +85,7 @@ class OrdersController < ApplicationController
         format.js {}       
 
       else
-        format.html { render action: "index" }
+        format.html { render "order_check"}
         format.json { render json: @order.errors, status: :unprocessable_entity }
         format.js {}
       end

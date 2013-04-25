@@ -185,6 +185,13 @@
 $(document).ready(function(){
   $("#banner ul li").eq(5).addClass("select");
 
+  
+  <% @errormsg = "" %>
+  <% @order.errors.full_messages.each do |msg| %>
+  <% @errormsg+=msg%>;
+  <% end %>
+  console.log("<%= @errormsg %>");
+
   /* add datepicker */
   $( "#order_receive_date" ).datepicker();
   $( "#order_receive_date" ).change(function(){
@@ -242,6 +249,7 @@ $(document).ready(function(){
     else{
       $("#error").hide();
     }
+    return true;
     return submit;
   }
 
@@ -273,7 +281,7 @@ $(document).ready(function(){
       $("#loading").css("display", "none");
 
 
-      $("#order_totalprice").val(data.ordernum);
+      //$("#order_totalprice").val(data.ordernum);
       $("#order_shippingfee").val(data.shippingfee);
       $("#showShippingfee").html(data.shippingfee);
       $("#total a").html(data.ordernum+data.shippingfee + " 元");
