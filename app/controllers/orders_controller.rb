@@ -25,37 +25,41 @@ class OrdersController < ApplicationController
 
   def calculate
     @orderitems = params[:orderitems]
-    @orderinfo = Array.new
-    @orderHasBox = false
-    @ordersum = 0
+    if(@orderitems!="null")
+      @orderinfo = Array.new
+      @orderHasBox = false
+      @ordersum = 0
 
-    JSON.parse(@orderitems).each do |item|
-      @item = Product.find(item["id"])
-      @sum = @item.price * Integer(item["amount"])
+      JSON.parse(@orderitems).each do |item|
+        @item = Product.find(item["id"])
+        @sum = @item.price * Integer(item["amount"])
 
-      if(@item.producttype == "box")
-        @orderHasBox = true
+        if(@item.producttype == "box")
+          @orderHasBox = true
+        end
+
+        @ordersum = @ordersum + @sum
+
+        @orderinfo.push({
+          :itemid => @item.id,
+          :name => @item.name,
+          :weight => @item.weight,
+          :ordernum => @item.ordernum,
+          :amount => item["amount"],
+          :sum => @sum
+          })
       end
+      @shippingfee = ((@ordersum  > 2000) || @orderHasBox)? 0:200
+      @order = { iteminfo: @orderinfo.to_json,
+        shippingfee: @shippingfee,
+        ordernum: @ordersum
+        }.to_json
 
-      @ordersum = @ordersum + @sum
-
-      @orderinfo.push({
-        :itemid => @item.id,
-        :name => @item.name,
-        :weight => @item.weight,
-        :ordernum => @item.ordernum,
-        :amount => item["amount"],
-        :sum => @sum
-        })
+      return render :text => @order
+    else
+      return render :text => "no items"
     end
-
-    @shippingfee = ((@ordersum  > 2000) || @orderHasBox)? 0:200
-    @order = { iteminfo: @orderinfo.to_json,
-               shippingfee: @shippingfee,
-               ordernum: @ordersum
-             }.to_json
-
-    return render :text => @order
+    
   end
 
   def order_finish
@@ -66,25 +70,32 @@ class OrdersController < ApplicationController
     @orderitems = ActiveSupport::JSON.decode(params[:orderitems])
 
     respond_to do |format|
-      if (@order.save && !@orderitems.blank?)
-        @orderitems.each do|orderitem|
-          @orderitem = @order.orderitems.new()
-          @orderitem.product_id = orderitem['id']
-          @orderitem.amount = orderitem['amount']
+      if(@order.save)
+        if(!@orderitems.blank?)
+          @orderitems.each do|orderitem|
+            @orderitem = @order.orderitems.new()
+            @orderitem.product_id = orderitem['id']
+            @orderitem.amount = orderitem['amount']
 
-          @orderitem.save
+            @orderitem.save
 
+          end
+
+          # send a order Email after save
+          NewOrder.send_order(@order).deliver
+          format.html { redirect_to action: "order_finish" }
+          format.json { render json: @order, status: :created, location: @order }
+          format.js {}
+        
+        else
+          @order.destroy
+          format.html { redirect_to action: "index"}
+          format.json { render json: @order.errors, status: :unprocessable_entity }
+          format.js {}
         end
 
-        # send a order Email after save
-        NewOrder.send_order(@order).deliver
-
-        format.html { redirect_to action: "order_finish" }
-        format.json { render json: @order, status: :created, location: @order }
-        format.js {}       
-
       else
-        format.html { render "order_check"}
+        format.html { render action: "order_check"}
         format.json { render json: @order.errors, status: :unprocessable_entity }
         format.js {}
       end
