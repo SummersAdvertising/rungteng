@@ -17,13 +17,9 @@ class ApplicationController < ActionController::Base
     @count = Guestcount.first
     if(@count.blank?)
       @count = Guestcount.new
-      @count.count = 1      
-    else
-      @count.count += 1
+      @count.count = 1
     end
-
-    @count.save
-
+    
     return @count
   end
 end
