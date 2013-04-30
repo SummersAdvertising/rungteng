@@ -27,11 +27,11 @@ a{text-decoration:none;font:300 14px "新細明體";color:#403F41;-webkit-text-s
 #social a{-webkit-transition:all .3s ease;-moz-transition:all .3s ease}
 #social a:hover{position:relative;top:-3px}
 #info{border-top:1px solid #EF873F;;font:300 13px "微軟正黑體";padding:100px 0 20px 0;text-align:center;
-background:url(../images/logo2.png) center 20px no-repeat;line-height:1.7em}
+background:image-url('logo2.png') center 20px no-repeat;line-height:1.7em}
 #info strong{font:700 16px "微軟正黑體"}
 #info strong span{font-size:13px}
 
 #counter{text-align:center;font:700 14px "微軟正黑體";color:#231815}
 #counter span{color:#666}
 
-#container{width:930px;float:right;background:url(../images/cbg.jpg) repeat;position:relative;box-shadow: inset 3px 0 3px #aaa}
+#container{width:930px;float:right;background:image-url('cbg.jpg') repeat;position:relative;box-shadow: inset 3px 0 3px #aaa}
