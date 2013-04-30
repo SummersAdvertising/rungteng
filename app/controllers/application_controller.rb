@@ -12,4 +12,18 @@ class ApplicationController < ActionController::Base
 	  $meta_title = nil
 	  $meta_description = nil
   end
+
+  def counter
+    @count = Guestcount.first
+    if(@count.blank?)
+      @count = Guestcount.new
+      @count.count = 1      
+    else
+      @count.count += 1
+    end
+
+    @count.save
+
+    return @count
+  end
 end

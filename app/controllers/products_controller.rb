@@ -1,5 +1,11 @@
 class ProductsController < ApplicationController
   layout false
+  before_filter :count
+  
+  def count
+    @count = counter()
+  end
+  
   def show
     @product = Product.find(params[:id])
 

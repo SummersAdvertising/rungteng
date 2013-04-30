@@ -1,5 +1,11 @@
 class NewsController < ApplicationController
   layout false
+  before_filter :count
+  
+  def count
+    @count = counter()
+  end
+  
   def index
     @news = News.order('created_at DESC').page(params[:page]).per(17)
 

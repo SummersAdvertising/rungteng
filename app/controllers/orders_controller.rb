@@ -1,5 +1,11 @@
 class OrdersController < ApplicationController
   layout false
+  before_filter :count, :except => [:calculate]
+  
+  def count
+    @count = counter()
+  end
+  
   def index
     @items = Product.where("producttype = ?", "item").order('ordernum ASC, updated_at DESC, created_at DESC')
     @boxs = Product.where("producttype = ?", "box").order('ordernum ASC, updated_at DESC, created_at DESC')
