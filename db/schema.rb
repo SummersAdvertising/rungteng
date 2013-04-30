@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130314104113) do
+ActiveRecord::Schema.define(:version => 20130430023324) do
 
   create_table "admins", :force => true do |t|
     t.string   "username"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20130314104113) do
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "guestcounts", :force => true do |t|
+    t.integer  "count",      :default => 0
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "news", :force => true do |t|
@@ -56,11 +62,11 @@ ActiveRecord::Schema.define(:version => 20130314104113) do
     t.string   "receive_address"
     t.date     "receive_date"
     t.string   "receive_time"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
     t.boolean  "isAdminCheck"
     t.string   "order_fax"
-    t.integer  "shippingfee",        :default => 0
+    t.integer  "shippingfee"
     t.text     "note"
   end
 

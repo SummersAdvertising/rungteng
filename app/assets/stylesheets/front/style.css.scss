@@ -22,13 +22,16 @@ a{text-decoration:none;font:300 14px "新細明體";color:#403F41;-webkit-text-s
 #banner li:hover{background:image-url('li.png') center 10px no-repeat #231815}
 #banner li:hover a{color:#fff}
 
-#footer{width:240px;margin:55px auto 0 auto}
-#social{border-bottom:1px solid #EF873F;text-align:center}
+#footer{width:240px;margin:75px auto 0 auto}
+#social{text-align:center}
 #social a{-webkit-transition:all .3s ease;-moz-transition:all .3s ease}
 #social a:hover{position:relative;top:-3px}
-#info{border-top:1px solid #FFEDE1;font:300 13px "微軟正黑體";padding:100px 0 20px 0;text-align:center;
-background:image-url('logo2.png') center 20px no-repeat;line-height:1.7em}
-#info strong{font:900 16px "微軟正黑體"!important}
-#info span{font:900 13px "微軟正黑體"!important}
+#info{border-top:1px solid #EF873F;;font:300 13px "微軟正黑體";padding:100px 0 20px 0;text-align:center;
+background:url(../images/logo2.png) center 20px no-repeat;line-height:1.7em}
+#info strong{font:700 16px "微軟正黑體"}
+#info strong span{font-size:13px}
 
-#container{width:930px;float:right;background:image-url('cbg.jpg') repeat;position:relative;box-shadow: inset 3px 0 3px #aaa}
+#counter{text-align:center;font:700 14px "微軟正黑體";color:#231815}
+#counter span{color:#666}
+
+#container{width:930px;float:right;background:url(../images/cbg.jpg) repeat;position:relative;box-shadow: inset 3px 0 3px #aaa}
