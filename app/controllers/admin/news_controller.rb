@@ -45,6 +45,7 @@ class Admin::NewsController < ApplicationController
 
   def destroyPhoto
     @photo = Newsphoto.find(params[:id])
+
     #File.delete("/public" + @photo.image) #carrierwave will handle this.
     @photo.destroy
 
