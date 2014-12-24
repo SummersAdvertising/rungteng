@@ -62,11 +62,11 @@ ActiveRecord::Schema.define(:version => 20130430023324) do
     t.string   "receive_address"
     t.date     "receive_date"
     t.string   "receive_time"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.boolean  "isAdminCheck"
     t.string   "order_fax"
-    t.integer  "shippingfee"
+    t.integer  "shippingfee",        :default => 0
     t.text     "note"
   end
 
